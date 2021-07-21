@@ -177,6 +177,58 @@ public class InventoryController {
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 
+    @FXML
+    public void editName(TableColumn.CellEditEvent edittedCell){
+        //get new changes
+        ItemWrapper itemSelected = itemTableView.getSelectionModel().getSelectedItem();
+
+        String newName = edittedCell.getNewValue().toString();
+        if(inventoryFunctions.validateName(newName)){
+            inventoryFunctions.editName(itemSelected, newName);
+            updateTableView();
+        }else{
+            showErrorPopUp("nameFormatError");
+            itemSelected.setName(edittedCell.getOldValue().toString());
+        }
+    }
+
+    @FXML
+    public void editValue(TableColumn.CellEditEvent edittedCell){
+        //get new changes
+        ItemWrapper itemSelected = itemTableView.getSelectionModel().getSelectedItem();
+
+        String newValue = edittedCell.getNewValue().toString();
+        if(inventoryFunctions.validateName(newValue)){
+            inventoryFunctions.editValue(itemSelected, newValue);
+            updateTableView();
+        }else{
+            showErrorPopUp("valueFormatError");
+            itemSelected.setName(edittedCell.getOldValue().toString());
+        }
+    }
+
+    @FXML
+    public void editSerialNumber(TableColumn.CellEditEvent edittedCell){
+        //get new changes
+        ItemWrapper itemSelected = itemTableView.getSelectionModel().getSelectedItem();
+
+        String newSerialNum = edittedCell.getNewValue().toString();
+        String oldSerialNum = edittedCell.getOldValue().toString();
+        if(!inventoryFunctions.isDuplicate(newSerialNum) && inventoryFunctions.validateSerialNumberFormat(newSerialNum)){
+            inventoryFunctions.editSerialNumber(itemSelected, newSerialNum, oldSerialNum);
+            updateTableView();
+        }else{
+            if(!inventoryFunctions.validateSerialNumberFormat(newSerialNum)){
+                showErrorPopUp("serialNumberFormatError");
+            }
+            if(inventoryFunctions.isDuplicate(newSerialNum)){
+                showErrorPopUp("duplicateError");
+            }
+            itemSelected.setSerialNumber(oldSerialNum);
+        }
+
+    }
+
     private boolean validateInputs(String name, String serialNumber, String value){
         boolean isValid = true;
         //does name have enough characters
@@ -200,7 +252,7 @@ public class InventoryController {
         }else{
             serialNumberErrorLabel.setText("");
         }
-        //is serial number a duplicate
+        //is serial number a duplicate (true is duplicate, false is unique)
         if(inventoryFunctions.isDuplicate(serialNumber)){
             showErrorPopUp("duplicateError");
             isValid = false;
@@ -211,6 +263,9 @@ public class InventoryController {
     private void updateTableView(){
         itemObservableList = inventoryFunctions.getAllItemsObservable();
         itemTableView.setItems(itemObservableList);
+        for(ItemWrapper item: itemObservableList){
+            System.out.println(item.getName());
+        }
     }
 
     @FXML public void showErrorPopUp(String errorType){

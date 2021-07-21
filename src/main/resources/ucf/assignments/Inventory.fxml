@@ -67,9 +67,9 @@
                         </HBox>
                         <TableView fx:id="itemTableView" layoutX="63.0" layoutY="66.0" prefHeight="563.0" prefWidth="521.0">
                           <columns>
-                            <TableColumn fx:id="valueColumn" prefWidth="75.0" text="Value" />
-                            <TableColumn fx:id="serialNumberColumn" prefWidth="139.0" text="Serial Number" />
-                              <TableColumn fx:id="nameColumn" prefWidth="306.0" text="Name" />
+                            <TableColumn fx:id="valueColumn" onEditCommit="#editValue" prefWidth="75.0" text="Value" />
+                            <TableColumn fx:id="serialNumberColumn" onEditCommit="#editSerialNumber" prefWidth="139.0" text="Serial Number" />
+                              <TableColumn fx:id="nameColumn" onEditCommit="#editName" prefWidth="306.0" text="Name" />
                           </columns>
                         </TableView>
                         <Button layoutX="284.0" layoutY="632.0" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete Item" />

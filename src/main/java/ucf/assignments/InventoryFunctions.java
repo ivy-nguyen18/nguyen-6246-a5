@@ -59,16 +59,19 @@ public class InventoryFunctions {
         allItems.remove(selectedItem);
     }
 
-    public void editName(){
-
+    public void editName(ItemWrapper selectedItem, String newName){
+        selectedItem.setName(newName);
     }
 
-    public void editValue(){
-
+    public void editValue(ItemWrapper selectedItem, String newValue){
+        newValue = formatCurrency(newValue);
+        selectedItem.setValue(newValue);
     }
 
-    public void editSerialNumber(){
-
+    public void editSerialNumber(ItemWrapper selectedItem, String newSerialNum, String oldSerialNum){
+        serialNumSet.remove(oldSerialNum);
+        serialNumSet.add(newSerialNum);
+        selectedItem.setSerialNumber(newSerialNum);
     }
 
     public void searchByName(){
