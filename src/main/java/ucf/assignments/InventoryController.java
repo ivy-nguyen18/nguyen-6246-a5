@@ -190,6 +190,7 @@ public class InventoryController {
             showErrorPopUp("nameFormatError");
             itemSelected.setName(edittedCell.getOldValue().toString());
         }
+        itemTableView.refresh();
     }
 
     @FXML
@@ -205,6 +206,7 @@ public class InventoryController {
             showErrorPopUp("valueFormatError");
             itemSelected.setName(edittedCell.getOldValue().toString());
         }
+        itemTableView.refresh();
     }
 
     @FXML
@@ -226,7 +228,7 @@ public class InventoryController {
             }
             itemSelected.setSerialNumber(oldSerialNum);
         }
-
+        itemTableView.refresh();
     }
 
     private boolean validateInputs(String name, String serialNumber, String value){
@@ -240,7 +242,7 @@ public class InventoryController {
         }
         //is value entered convertible to US currency
         if(!inventoryFunctions.validateValue(value)){
-            valueErrorLabel.setText("Value must be a contain digits only");
+            valueErrorLabel.setText("Value must contain digits only");
             isValid = false;
         }else{
             valueErrorLabel.setText("");
