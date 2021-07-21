@@ -84,6 +84,12 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_edit_serial_number_of_existing_item(){
+
+    }
+
+    @Test
+    void able_to_edit_name_of_existing_item(){
+
     }
 
     @Test
