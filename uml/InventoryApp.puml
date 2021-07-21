@@ -1,27 +1,96 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+class FileFunctions{
+    + storeAsJSON()
+    + storeAsHTML()
+    + storeAsTSV()
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+class Inventory{
+    + main(String [])
+    + start(Stage)
 }
+
+class InventoryController{
+    - itemTableView: TableView<ItemWrapper>
+    - valueColumn: TableColumn<ItemWrapper, String>
+    - serialNumberColumn: TableColumn<ItemWrapper, String>
+    - nameColumn: TableColumn<ItemWrapper, String>
+    - nameTextField: TextField
+    - serialNumberTextField: TextField
+    - valueTextField: TextField
+    - searchBySplitMenuButton: SplitMenuButton
+    - searchByTextField: TextField
+    - itemErrorLabel: Label
+    - nameErrorLabel: Label
+    - valueErrorLabel: Label
+    - serialNumberErrorLabel: Label
+    - primaryStage: Stage
+    - selectedFile: File
+    - inventoryFunctions: InventoryFunctions
+
+    + setPrimaryStage(Stage)
+    + saveClicked(ActionEvent)
+    + openClicked(ActionEvent)
+    + addItemButtonClicked(ActionEvent)
+    + serialNumberSearchClicked(ActionEvent)
+    + nameSearchClicked(ActionEvent)
+    + searchButtonClicked(ActionEvent)
+    + deleteButtonClicked(ActionEvent)
+    + initialize()
+    - initializeLabels()
+    - initializeTable()
+    - editColumns()
+    + showErrorPopUp(String)
+}
+
+class InventoryFunctions{
+    + addItem(String, String, String)
+    + deleteItem(ItemWrapper, ObservableList<ItemWrapper>)
+    + editName()
+    + editValue()
+    + editSerialNumber()
+    + searchByName()
+    + searchByValue()
+}
+
+class Item{
+    - value: BigDecimal
+    - serialNumber: String
+    - name: String
+
+    + Item(BigDecimal, String, String)
+    + getValue(): BigDecimal
+    + setValue(BigDecimal value)
+    + getSerialNumber(): String
+    + setSerialNumber(String)
+    + getName(): String
+    + setName(String)
+}
+
+class ItemWrapper{
+    - value: String
+    - serialNumber: String
+    - name: String
+
+    + Item(String, String, String)
+    + getValue(): String
+    + setValue(String value)
+    + getSerialNumber(): String
+    + setSerialNumber(String)
+    + getName(): String
+    + setName(String)
+}
+
+javafx.Application <|- Inventory
+Inventory -- InventoryController
+InventoryController -- InventoryFunctions
+InventoryController -- Item
+InventoryFunctions -- Item
+FileFunctions -- InventoryController
+Item -- FileFunctions
+
+
 
 @enduml
