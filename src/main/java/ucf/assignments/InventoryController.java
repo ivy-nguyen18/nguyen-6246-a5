@@ -10,7 +10,8 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 public class InventoryController {
 
@@ -26,7 +27,7 @@ public class InventoryController {
     @FXML private TextField valueTextField;
 
     //fx id for search menu
-    @FXML private SplitMenuButton searchBySplitMenuButton;
+    @FXML private ComboBox<String> searchByComboBox;
     @FXML private TextField searchByTextField;
     @FXML private ObservableList<ItemWrapper> itemObservableList = FXCollections.observableArrayList();
     @FXML private Label itemErrorLabel;
@@ -36,9 +37,13 @@ public class InventoryController {
     @FXML private Label valueErrorLabel;
     @FXML private Label serialNumberErrorLabel;
 
+    //fx id for view All
+    @FXML private Button viewAllButtonClicked;
+
     private Stage primaryStage;
     private File selectedFile;
-    private  InventoryFunctions inventoryFunctions;
+    private  InventoryFunctions inventoryFunctions = new InventoryFunctions();
+    private Set<String> serialNumSet = new HashSet<>();
 
     public void setPrimaryStage(Stage primaryStage){
         this.primaryStage = primaryStage;
@@ -58,14 +63,39 @@ public class InventoryController {
 
     @FXML
     public void addItemButtonClicked(ActionEvent actionEvent) {
+        //get the input
+        String name = nameTextField.getText();
+        String value = valueTextField.getText();
+        String serialNumber = serialNumberTextField.getText();
+
+        //validate inputs
+        if(validateInputs(name, serialNumber, value)){
+            initializeLabels();
+            inventoryFunctions.addItem(name, serialNumber, value);
+            updateTableView();
+        }
     }
 
     @FXML
-    public void serialNumberSearchClicked(ActionEvent actionEvent) {
-    }
+    public void searchByComboBoxClicked(ActionEvent actionEvent){
+        //get the choice
+        String choice = searchByComboBox.getValue();
 
-    @FXML
-    public void nameSearchClicked(ActionEvent actionEvent) {
+        //make the search text field editable now
+        searchByTextField.setEditable(true);
+
+        switch(choice){
+            case "Name" -> {
+                 //search by name
+            }
+            case "Serial Number" -> {
+                //search by serial number
+            }
+            default -> {
+                //show regular view
+            }
+        }
+
     }
 
     @FXML
@@ -76,13 +106,38 @@ public class InventoryController {
     public void deleteButtonClicked(ActionEvent actionEvent) {
     }
 
+    @FXML
+    public void viewAllButtonClicked(ActionEvent actionEvent){
+        //reset searchBy ComboBox to say "Search by..."
+        //make the searchBy textField to be not editable
+        //reload entire itemList
+
+    }
+
     public void initialize(){
         //make InventoryFunctions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
+        inventoryFunctions.setAllItems(itemObservableList);
+        inventoryFunctions.setSerialNumSet(serialNumSet);
+        //initialize search
+        initializeSearchFields();
         //initialize the labels
         initializeLabels();
         //set up the table
         initializeTable();
+    }
+
+    private void initializeSearchFields(){
+        //initialize ComboBox
+        initializeComboBox();
+
+        //make search field not editable until comboBox is clicked
+        searchByTextField.setEditable(false);
+    }
+
+    private void initializeComboBox() {
+        searchByComboBox.getItems().add("Name");
+        searchByComboBox.getItems().add("Serial Number");
     }
 
     private void initializeLabels(){
@@ -117,6 +172,42 @@ public class InventoryController {
         valueColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         serialNumberColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+    }
+
+    private boolean validateInputs(String name, String serialNumber, String value){
+        boolean isValid = true;
+        //does name have enough characters
+        if(!inventoryFunctions.validateName(name)){
+            nameErrorLabel.setText("Name must contain between 2 and 256 characters (inclusive)");
+            isValid = false;
+        }else{
+            nameErrorLabel.setText("");
+        }
+        //is value entered convertible to US currency
+        if(!inventoryFunctions.validateValue(value)){
+            valueErrorLabel.setText("Value must be a contain digits only");
+            isValid = false;
+        }else{
+            valueErrorLabel.setText("");
+        }
+        //is serial number in correct format
+        if(!inventoryFunctions.validateSerialNumberFormat(serialNumber)){
+            serialNumberErrorLabel.setText("Serial number format must be in format XXXXXXXXXX, where X is a digit or letter");
+            isValid = false;
+        }else{
+            serialNumberErrorLabel.setText("");
+        }
+        //is serial number a duplicate
+        if(inventoryFunctions.isDuplicate(serialNumber)){
+            showErrorPopUp("duplicateError");
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    private void updateTableView(){
+        itemObservableList = inventoryFunctions.getAllItemsObservable();
+        itemTableView.setItems(itemObservableList);
     }
 
     @FXML public void showErrorPopUp(String errorType){
