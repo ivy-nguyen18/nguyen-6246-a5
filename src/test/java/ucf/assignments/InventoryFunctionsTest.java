@@ -84,7 +84,14 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_edit_serial_number_of_existing_item(){
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+        ItemWrapper item1 = new ItemWrapper("100.00", "1234567890", "Theodore");
 
+        inventoryFunctions.editSerialNumber(item1, "0000000000", "1234567890");
+        String actual = item1.getSerialNumber();
+        String expected = "0000000000";
+
+        assertEquals(actual, expected);
     }
 
     @Test
