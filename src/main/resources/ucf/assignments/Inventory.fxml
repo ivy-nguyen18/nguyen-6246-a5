@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="698.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.InventoryController">
+   <children>
+      <BorderPane layoutX="211.0" layoutY="81.0" prefHeight="576.0" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <MenuBar prefWidth="765.0" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#saveClicked" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveAsClicked" text="Save As..." />
+                        <MenuItem mnemonicParsing="false" onAction="#openClicked" text="Open" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+         <center>
+            <SplitPane dividerPositions="0.2627986348122867" prefHeight="573.0" prefWidth="822.0" BorderPane.alignment="CENTER">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="372.0">
+                     <children>
+                        <VBox layoutX="23.0" layoutY="14.0" prefHeight="254.0" prefWidth="183.0" spacing="20.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Item" textOrigin="CENTER" translateX="45.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="nameTextField" promptText="Name" />
+                              <Label fx:id="nameErrorLabel" text="Label" />
+                              <TextField fx:id="serialNumberTextField" promptText="Serial Number (XXXXXXXXXX)" />
+                              <Label fx:id="serialNumberErrorLabel" text="Label" />
+                              <TextField fx:id="valueTextField" promptText="Value" />
+                              <Label fx:id="valueErrorLabel" text="Label" />
+                              <Button mnemonicParsing="false" onAction="#addItemButtonClicked" text="Add Item" translateX="55.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <HBox layoutX="64.0" layoutY="14.0" prefHeight="25.0" prefWidth="518.0">
+                           <children>
+                              <SplitMenuButton mnemonicParsing="false" text="Search by..." wrapText="true">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#serialNumberSearchClicked" text="Serial Number" />
+                                  <MenuItem mnemonicParsing="false" onAction="#nameSearchClicked" text="Name" />
+                                </items>
+                              </SplitMenuButton>
+                              <TextField prefHeight="25.0" prefWidth="364.0" promptText="Find Item..." />
+                              <Button mnemonicParsing="false" onAction="#searchButtonClicked" text="Search" />
+                           </children>
+                        </HBox>
+                        <TableView fx:id="itemTableView" layoutX="63.0" layoutY="66.0" prefHeight="563.0" prefWidth="521.0">
+                          <columns>
+                            <TableColumn fx:id="valueColumn" prefWidth="75.0" text="Value" />
+                            <TableColumn fx:id="serialNumberColumn" prefWidth="139.0" text="Serial Number" />
+                              <TableColumn fx:id="nameColumn" prefWidth="306.0" text="Name" />
+                          </columns>
+                        </TableView>
+                        <Button layoutX="284.0" layoutY="632.0" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete Item" />
+                        <Label fx:id="itemErrorLabel" layoutX="165.0" layoutY="39.0" text="Label" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

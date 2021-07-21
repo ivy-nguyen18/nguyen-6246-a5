@@ -2,22 +2,22 @@ package ucf.assignments;
 
 import java.math.BigDecimal;
 
-public class Item {
-    private BigDecimal value;
+public class ItemWrapper {
+    private String value;
     private String serialNumber;
     private String name;
 
-    public Item(BigDecimal value, String serialNumber, String name){
+    public ItemWrapper(String value, String serialNumber, String name){
         this.value = value;
         this.serialNumber = serialNumber;
         this.name = name;
     }
 
-    public BigDecimal getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(BigDecimal value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

@@ -29,4 +29,4 @@ test {
     useJUnitPlatform()
 }
 
-mainClassName = 'ucf.assignments.InventoryApp'
+mainClassName = 'ucf.assignments.Inventory'
