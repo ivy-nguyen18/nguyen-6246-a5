@@ -24,12 +24,16 @@ public class InventoryFunctions {
         return serialNumSet;
     }
 
-    public void setAllItems(ObservableList<ItemWrapper> observableList){
+    public void setItemObservableList(ObservableList<ItemWrapper> observableList){
         this.allItems = new ArrayList<>(observableList);
     }
 
     public ArrayList<ItemWrapper> getAllItems(){
         return allItems;
+    }
+
+    public void setAllItems(ArrayList<ItemWrapper> allItems){
+        this.allItems = allItems;
     }
 
     public ObservableList<ItemWrapper> getAllItemsObservable(){

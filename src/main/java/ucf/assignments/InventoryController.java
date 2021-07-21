@@ -117,7 +117,7 @@ public class InventoryController {
     public void initialize(){
         //make InventoryFunctions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
-        inventoryFunctions.setAllItems(itemObservableList);
+        inventoryFunctions.setItemObservableList(itemObservableList);
         inventoryFunctions.setSerialNumSet(serialNumSet);
         //initialize search
         initializeSearchFields();
