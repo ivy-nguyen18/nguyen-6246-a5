@@ -99,9 +99,9 @@ class InventoryFunctionsTest {
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
         ItemWrapper item1 = new ItemWrapper("100.00", "1234567890", "Theodore");
 
-        inventoryFunctions.editName(item1, "Alvin");
+        inventoryFunctions.editName(item1, "Simon");
         String actual = item1.getName();
-        String expected = "Alvin";
+        String expected = "Simon";
 
         assertEquals(actual, expected);
     }
