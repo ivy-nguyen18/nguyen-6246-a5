@@ -52,8 +52,11 @@ public class InventoryFunctions {
         allItems.add(newItem);
     }
 
-    public void deleteItem(ItemWrapper selectedItem, ObservableList<ItemWrapper> allItemsList){
-
+    public void deleteItem(ItemWrapper selectedItem){
+        //remove serial number from serial number list
+        serialNumSet.remove(selectedItem.getSerialNumber());
+        //remove item from list
+        allItems.remove(selectedItem);
     }
 
     public void editName(){

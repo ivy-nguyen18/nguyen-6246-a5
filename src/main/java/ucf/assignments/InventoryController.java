@@ -104,6 +104,9 @@ public class InventoryController {
 
     @FXML
     public void deleteButtonClicked(ActionEvent actionEvent) {
+        ItemWrapper selectedItem = itemTableView.getSelectionModel().getSelectedItem();
+        inventoryFunctions.deleteItem(selectedItem);
+        updateTableView();
     }
 
     @FXML
