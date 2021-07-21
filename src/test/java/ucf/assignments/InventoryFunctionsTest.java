@@ -96,7 +96,14 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_edit_name_of_existing_item(){
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+        ItemWrapper item1 = new ItemWrapper("100.00", "1234567890", "Theodore");
 
+        inventoryFunctions.editName(item1, "Alvin");
+        String actual = item1.getName();
+        String expected = "Alvin";
+
+        assertEquals(actual, expected);
     }
 
     @Test
