@@ -181,15 +181,18 @@ public class InventoryController {
     public void editName(TableColumn.CellEditEvent edittedCell){
         //get new changes
         ItemWrapper itemSelected = itemTableView.getSelectionModel().getSelectedItem();
-
         String newName = edittedCell.getNewValue().toString();
+
+        //if name is in correct format, update list
         if(inventoryFunctions.validateName(newName)){
             inventoryFunctions.editName(itemSelected, newName);
             updateTableView();
         }else{
+            //else display popup
             showErrorPopUp("nameFormatError");
             itemSelected.setName(edittedCell.getOldValue().toString());
         }
+        //update table on any changes
         itemTableView.refresh();
     }
 
@@ -197,15 +200,18 @@ public class InventoryController {
     public void editValue(TableColumn.CellEditEvent edittedCell){
         //get new changes
         ItemWrapper itemSelected = itemTableView.getSelectionModel().getSelectedItem();
-
         String newValue = edittedCell.getNewValue().toString();
-        if(inventoryFunctions.validateName(newValue)){
+
+        //if value is in correct format, update list
+        if(inventoryFunctions.validateValue(newValue)){
             inventoryFunctions.editValue(itemSelected, newValue);
             updateTableView();
         }else{
+            //if value is not in correct format, display error
             showErrorPopUp("valueFormatError");
             itemSelected.setName(edittedCell.getOldValue().toString());
         }
+        //update table on any changes
         itemTableView.refresh();
     }
 
@@ -213,21 +219,25 @@ public class InventoryController {
     public void editSerialNumber(TableColumn.CellEditEvent edittedCell){
         //get new changes
         ItemWrapper itemSelected = itemTableView.getSelectionModel().getSelectedItem();
-
         String newSerialNum = edittedCell.getNewValue().toString();
         String oldSerialNum = edittedCell.getOldValue().toString();
+
+        //if serial number is not a duplicate and is in the correct format, update list
         if(!inventoryFunctions.isDuplicate(newSerialNum) && inventoryFunctions.validateSerialNumberFormat(newSerialNum)){
             inventoryFunctions.editSerialNumber(itemSelected, newSerialNum, oldSerialNum);
             updateTableView();
         }else{
+            //if serial number is not in correct format, display appropriate error
             if(!inventoryFunctions.validateSerialNumberFormat(newSerialNum)){
                 showErrorPopUp("serialNumberFormatError");
             }
+            //if serial number is a duplicate, display appropriate error
             if(inventoryFunctions.isDuplicate(newSerialNum)){
                 showErrorPopUp("duplicateError");
             }
             itemSelected.setSerialNumber(oldSerialNum);
         }
+        //update table on any changes
         itemTableView.refresh();
     }
 

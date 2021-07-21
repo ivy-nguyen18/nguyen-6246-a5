@@ -72,6 +72,14 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_edit_value_of_existing_item(){
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+        ItemWrapper item1 = new ItemWrapper("100.00", "1234567890", "Theodore");
+
+        inventoryFunctions.editValue(item1, "1000000.00");
+        String actual = item1.getValue();
+        String expected = "$1,000,000.00";
+
+        assertEquals(actual, expected);
     }
 
     @Test
