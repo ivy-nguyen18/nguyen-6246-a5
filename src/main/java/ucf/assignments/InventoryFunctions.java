@@ -88,6 +88,14 @@ public class InventoryFunctions {
         }
     }
 
+    public void searchBySerialNumber(String serialNum){
+        filteredItems.clear();
+        for(ItemWrapper item: allItems){
+            if(item.getSerialNumber().toLowerCase().contains(serialNum.toLowerCase())){
+                filteredItems.add(item);
+            }
+        }
+    }
 
     private String formatCurrency(String value){
         NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);
