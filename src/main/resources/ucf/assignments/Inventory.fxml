@@ -38,7 +38,7 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="671.0" prefWidth="372.0">
                      <children>
-                        <VBox layoutX="23.0" layoutY="14.0" prefHeight="671.0" prefWidth="216.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox layoutY="14.0" prefHeight="671.0" prefWidth="216.0" spacing="20.0" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Item" textOrigin="CENTER" translateX="60.0" translateY="10.0">
                                  <font>
@@ -81,7 +81,7 @@
                      <children>
                         <HBox layoutX="64.0" layoutY="14.0" prefHeight="25.0" prefWidth="518.0">
                            <children>
-                              <ComboBox fx:id="searchByComboBox" onAction="#comboBoxClicked" prefHeight="25.0" prefWidth="103.0" promptText="Search by..." />
+                              <ComboBox fx:id="searchByComboBox" onAction="#comboBoxClicked" prefHeight="25.0" prefWidth="103.0" />
                               <TextField fx:id="searchByTextField" prefHeight="25.0" prefWidth="364.0" promptText="Find Item..." />
                               <Button mnemonicParsing="false" onAction="#searchButtonClicked" text="Search" />
                            </children>
@@ -94,7 +94,7 @@
                           </columns>
                         </TableView>
                         <Button layoutX="284.0" layoutY="632.0" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete Item" />
-                        <Button fx:id="viewAllButtonClicked" layoutX="525.0" layoutY="632.0" mnemonicParsing="false" onAction="#viewAllButtonClicked" text="View All" />
+                        <Button layoutX="528.0" layoutY="632.0" mnemonicParsing="false" onAction="#refreshButtonClicked" text="Refresh" />
                      </children>
                   </AnchorPane>
               </items>

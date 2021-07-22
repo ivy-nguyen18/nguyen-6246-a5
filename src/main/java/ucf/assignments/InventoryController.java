@@ -30,18 +30,17 @@ public class InventoryController {
     @FXML private ComboBox<String> searchByComboBox;
     @FXML private TextField searchByTextField;
 
-    @FXML private ObservableList<Item> itemObservableList = FXCollections.observableArrayList();
-
     //fx id for error labels
     @FXML private Label nameErrorLabel;
     @FXML private Label valueErrorLabel;
     @FXML private Label serialNumberErrorLabel;
 
+    @FXML private ObservableList<Item> itemObservableList = FXCollections.observableArrayList();
 
     private Stage primaryStage;
     private File selectedFile;
-    private  InventoryFunctions inventoryFunctions = new InventoryFunctions();
-    private Set<String> serialNumSet = new HashSet<>();
+    private final InventoryFunctions inventoryFunctions = new InventoryFunctions();
+    private final Set<String> serialNumSet = new HashSet<>();
 
     public void setPrimaryStage(Stage primaryStage){
         this.primaryStage = primaryStage;
@@ -113,9 +112,15 @@ public class InventoryController {
     }
 
     @FXML
-    public void viewAllButtonClicked(ActionEvent actionEvent){
-        //reload entire itemList
+    public void refreshButtonClicked(ActionEvent actionEvent){
+        itemTableView.setItems(itemObservableList);
         itemTableView.refresh();
+
+        //reset search field
+        searchByComboBox.getSelectionModel().clearSelection();
+        searchByComboBox.setPromptText("Search by...");
+        searchByTextField.clear();
+        searchByTextField.setEditable(false);
     }
 
     public void initialize(){
@@ -238,6 +243,7 @@ public class InventoryController {
     }
 
     private void initializeComboBox() {
+        searchByComboBox.setPromptText("Search by...");
         searchByComboBox.getItems().add("Name");
         searchByComboBox.getItems().add("Serial Number");
     }

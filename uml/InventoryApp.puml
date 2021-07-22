@@ -20,28 +20,38 @@ class InventoryController{
     - nameTextField: TextField
     - serialNumberTextField: TextField
     - valueTextField: TextField
-    - searchBySplitMenuButton: SplitMenuButton
+    - searchByComboBox: ComboBox<String>
     - searchByTextField: TextField
-    - itemErrorLabel: Label
     - nameErrorLabel: Label
     - valueErrorLabel: Label
     - serialNumberErrorLabel: Label
+    - itemObservableList: ObservableList<Item>
     - primaryStage: Stage
     - selectedFile: File
     - inventoryFunctions: InventoryFunctions
+    - serialNumSet: Set<String>
+
 
     + setPrimaryStage(Stage)
     + saveClicked(ActionEvent)
+    + saveAsClicked(ActionEvent)
     + openClicked(ActionEvent)
     + addItemButtonClicked(ActionEvent)
-    + serialNumberSearchClicked(ActionEvent)
-    + nameSearchClicked(ActionEvent)
+    + comboBoxClicked(ActionEvent)
     + searchButtonClicked(ActionEvent)
     + deleteButtonClicked(ActionEvent)
     + initialize()
+    + refreshButtonClicked(ActionEvent)
     - initializeLabels()
     - initializeTable()
     - editColumns()
+    + editName(TableColumn.CellEditEvent)
+    + editValue(TableColumn.CellEditEvent)
+    + editSerialNumber(TableColumn.CellEditEvent)
+    - initializeSearchFields()
+    - initializeComboBox()
+    - validateInputs(String, String, String): boolean
+    - updateTableView()
     + showErrorPopUp(String)
 }
 
