@@ -15,6 +15,7 @@ import java.util.Set;
 public class InventoryFunctions {
     private Set<String> serialNumSet = new HashSet<>();
     private ArrayList<ItemWrapper> allItems = new ArrayList<>();
+    private ArrayList<ItemWrapper> filteredItems = new ArrayList<>();
 
     public void setSerialNumSet(Set<String> serialNumSet){
         this.serialNumSet = serialNumSet;
@@ -38,6 +39,10 @@ public class InventoryFunctions {
 
     public ObservableList<ItemWrapper> getAllItemsObservable(){
         return FXCollections.observableArrayList(allItems);
+    }
+
+    public ObservableList<ItemWrapper> getFilteredItems(){
+        return FXCollections.observableArrayList(filteredItems);
     }
 
     public void addItem(String name, String serialNumber, String value){
@@ -74,13 +79,15 @@ public class InventoryFunctions {
         selectedItem.setSerialNumber(newSerialNum);
     }
 
-    public void searchByName(){
-
+    public void searchByName(String name){
+        filteredItems.clear();
+        for(ItemWrapper item: allItems){
+            if(item.getName().toLowerCase().contains(name.toLowerCase())){
+                filteredItems.add(item);
+            }
+        }
     }
 
-    public void searchByValue(){
-
-    }
 
     private String formatCurrency(String value){
         NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);

@@ -81,7 +81,7 @@
                      <children>
                         <HBox layoutX="64.0" layoutY="14.0" prefHeight="25.0" prefWidth="518.0">
                            <children>
-                              <ComboBox fx:id="searchByComboBox" onAction="#searchByComboBoxClicked" prefHeight="25.0" prefWidth="103.0" promptText="Search by..." />
+                              <ComboBox fx:id="searchByComboBox" onAction="#comboBoxClicked" prefHeight="25.0" prefWidth="103.0" promptText="Search by..." />
                               <TextField fx:id="searchByTextField" prefHeight="25.0" prefWidth="364.0" promptText="Find Item..." />
                               <Button mnemonicParsing="false" onAction="#searchButtonClicked" text="Search" />
                            </children>
@@ -94,7 +94,6 @@
                           </columns>
                         </TableView>
                         <Button layoutX="284.0" layoutY="632.0" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete Item" />
-                        <Label fx:id="itemErrorLabel" layoutX="177.0" layoutY="39.0" text="Label" />
                         <Button fx:id="viewAllButtonClicked" layoutX="525.0" layoutY="632.0" mnemonicParsing="false" onAction="#viewAllButtonClicked" text="View All" />
                      </children>
                   </AnchorPane>

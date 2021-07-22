@@ -2,6 +2,8 @@ package ucf.assignments;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 public class InventoryController {
 
@@ -29,16 +32,14 @@ public class InventoryController {
     //fx id for search menu
     @FXML private ComboBox<String> searchByComboBox;
     @FXML private TextField searchByTextField;
+
     @FXML private ObservableList<ItemWrapper> itemObservableList = FXCollections.observableArrayList();
-    @FXML private Label itemErrorLabel;
 
     //fx id for error labels
     @FXML private Label nameErrorLabel;
     @FXML private Label valueErrorLabel;
     @FXML private Label serialNumberErrorLabel;
 
-    //fx id for view All
-    @FXML private Button viewAllButtonClicked;
 
     private Stage primaryStage;
     private File selectedFile;
@@ -77,30 +78,35 @@ public class InventoryController {
     }
 
     @FXML
-    public void searchByComboBoxClicked(ActionEvent actionEvent){
-        //get the choice
-        String choice = searchByComboBox.getValue();
-
+    public void comboBoxClicked(ActionEvent actionEvent){
         //make the search text field editable now
         searchByTextField.setEditable(true);
-
-        switch(choice){
-            case "Name" -> {
-                 //search by name
-            }
-            case "Serial Number" -> {
-                //search by serial number
-            }
-            default -> {
-                //show regular view
-            }
-        }
-
     }
 
     @FXML
     public void searchButtonClicked(ActionEvent actionEvent) {
+        //get the choice from ComboBox
+        String choice = searchByComboBox.getValue();
+
+        String searchItem = searchByTextField.getText();
+
+        switch(choice){
+            case "Name" -> {
+                //search by name
+                inventoryFunctions.searchByName(searchItem);
+                itemTableView.setItems(inventoryFunctions.getFilteredItems());
+            }
+            case "Serial Number" -> {
+                //search by serial number
+                inventoryFunctions.searchBySerialNumber(searchItem);
+                itemTableView.setItems(inventoryFunctions.getFilteredItems());
+            }
+            default -> {
+                itemTableView.setItems(itemObservableList);
+            }
+        }
     }
+
 
     @FXML
     public void deleteButtonClicked(ActionEvent actionEvent) {
@@ -111,10 +117,8 @@ public class InventoryController {
 
     @FXML
     public void viewAllButtonClicked(ActionEvent actionEvent){
-        //reset searchBy ComboBox to say "Search by..."
-        //make the searchBy textField to be not editable
         //reload entire itemList
-
+        itemTableView.refresh();
     }
 
     public void initialize(){
@@ -122,7 +126,7 @@ public class InventoryController {
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
         inventoryFunctions.setItemObservableList(itemObservableList);
         inventoryFunctions.setSerialNumSet(serialNumSet);
-        //initialize search
+        //initialize search field
         initializeSearchFields();
         //initialize the labels
         initializeLabels();
@@ -130,22 +134,9 @@ public class InventoryController {
         initializeTable();
     }
 
-    private void initializeSearchFields(){
-        //initialize ComboBox
-        initializeComboBox();
-
-        //make search field not editable until comboBox is clicked
-        searchByTextField.setEditable(false);
-    }
-
-    private void initializeComboBox() {
-        searchByComboBox.getItems().add("Name");
-        searchByComboBox.getItems().add("Serial Number");
-    }
 
     private void initializeLabels(){
         //all labels initialize the empty
-        itemErrorLabel.setText("");
         nameErrorLabel.setText("");
         valueErrorLabel.setText("");
         serialNumberErrorLabel.setText("");
@@ -239,6 +230,19 @@ public class InventoryController {
         }
         //update table on any changes
         itemTableView.refresh();
+    }
+
+    private void initializeSearchFields(){
+        //initialize ComboBox
+        initializeComboBox();
+
+        //make search field not editable until comboBox is clicked
+        searchByTextField.setEditable(false);
+    }
+
+    private void initializeComboBox() {
+        searchByComboBox.getItems().add("Name");
+        searchByComboBox.getItems().add("Serial Number");
     }
 
     private boolean validateInputs(String name, String serialNumber, String value){
