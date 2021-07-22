@@ -19,10 +19,6 @@ public class InventoryFunctions {
         this.serialNumSet = serialNumSet;
     }
 
-    public Set<String> getSerialNumSet(){
-        return serialNumSet;
-    }
-
     public void setItemObservableList(ObservableList<Item> observableList){
         this.allItems = new ArrayList<>(observableList);
     }
