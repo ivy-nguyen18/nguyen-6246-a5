@@ -2,8 +2,6 @@ package ucf.assignments;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,15 +12,14 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Predicate;
 
 public class InventoryController {
 
     //create the table
-    @FXML private TableView<ItemWrapper> itemTableView = new TableView<>();
-    @FXML private TableColumn<ItemWrapper, String> valueColumn;
-    @FXML private TableColumn<ItemWrapper, String> serialNumberColumn;
-    @FXML private TableColumn<ItemWrapper, String> nameColumn;
+    @FXML private TableView<Item> itemTableView = new TableView<>();
+    @FXML private TableColumn<Item, String> valueColumn;
+    @FXML private TableColumn<Item, String> serialNumberColumn;
+    @FXML private TableColumn<Item, String> nameColumn;
 
     //fx id to add new Items
     @FXML private TextField nameTextField;
@@ -33,7 +30,7 @@ public class InventoryController {
     @FXML private ComboBox<String> searchByComboBox;
     @FXML private TextField searchByTextField;
 
-    @FXML private ObservableList<ItemWrapper> itemObservableList = FXCollections.observableArrayList();
+    @FXML private ObservableList<Item> itemObservableList = FXCollections.observableArrayList();
 
     //fx id for error labels
     @FXML private Label nameErrorLabel;
@@ -110,7 +107,7 @@ public class InventoryController {
 
     @FXML
     public void deleteButtonClicked(ActionEvent actionEvent) {
-        ItemWrapper selectedItem = itemTableView.getSelectionModel().getSelectedItem();
+        Item selectedItem = itemTableView.getSelectionModel().getSelectedItem();
         inventoryFunctions.deleteItem(selectedItem);
         updateTableView();
     }
@@ -171,7 +168,7 @@ public class InventoryController {
     @FXML
     public void editName(TableColumn.CellEditEvent edittedCell){
         //get new changes
-        ItemWrapper itemSelected = itemTableView.getSelectionModel().getSelectedItem();
+        Item itemSelected = itemTableView.getSelectionModel().getSelectedItem();
         String newName = edittedCell.getNewValue().toString();
 
         //if name is in correct format, update list
@@ -190,7 +187,7 @@ public class InventoryController {
     @FXML
     public void editValue(TableColumn.CellEditEvent edittedCell){
         //get new changes
-        ItemWrapper itemSelected = itemTableView.getSelectionModel().getSelectedItem();
+        Item itemSelected = itemTableView.getSelectionModel().getSelectedItem();
         String newValue = edittedCell.getNewValue().toString();
 
         //if value is in correct format, update list
@@ -209,7 +206,7 @@ public class InventoryController {
     @FXML
     public void editSerialNumber(TableColumn.CellEditEvent edittedCell){
         //get new changes
-        ItemWrapper itemSelected = itemTableView.getSelectionModel().getSelectedItem();
+        Item itemSelected = itemTableView.getSelectionModel().getSelectedItem();
         String newSerialNum = edittedCell.getNewValue().toString();
         String oldSerialNum = edittedCell.getOldValue().toString();
 
@@ -279,7 +276,7 @@ public class InventoryController {
     private void updateTableView(){
         itemObservableList = inventoryFunctions.getAllItemsObservable();
         itemTableView.setItems(itemObservableList);
-        for(ItemWrapper item: itemObservableList){
+        for(Item item: itemObservableList){
             System.out.println(item.getName());
         }
     }

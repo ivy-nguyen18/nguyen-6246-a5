@@ -32,9 +32,9 @@ class InventoryFunctionsTest {
     void able_to_add_new_item(){
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
-        ItemWrapper item1 = new ItemWrapper("100.00", "1234567890", "Theodore");
-        ItemWrapper item2 = new ItemWrapper("100.00", "1234567890", "Simon");
-        ArrayList<ItemWrapper> itemsList = new ArrayList<>();
+        Item item1 = new Item("100.00", "1234567890", "Theodore");
+        Item item2 = new Item("100.00", "1234567890", "Simon");
+        ArrayList<Item> itemsList = new ArrayList<>();
         itemsList.add(item1);
         itemsList.add(item2);
         inventoryFunctions.setAllItems(itemsList);
@@ -54,10 +54,10 @@ class InventoryFunctionsTest {
     void able_to_remove_existing_item(){
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
-        ItemWrapper item1 = new ItemWrapper("100.00", "1234567890", "Theodore");
-        ItemWrapper item2 = new ItemWrapper("100.00", "1234567890", "Simon");
-        ItemWrapper item3 = new ItemWrapper("100.00", "1234567890", "Alvin");
-        ArrayList<ItemWrapper> itemsList = new ArrayList<>();
+        Item item1 = new Item("100.00", "1234567890", "Theodore");
+        Item item2 = new Item("100.00", "1234567890", "Simon");
+        Item item3 = new Item("100.00", "1234567890", "Alvin");
+        ArrayList<Item> itemsList = new ArrayList<>();
         itemsList.add(item1);
         itemsList.add(item2);
         itemsList.add(item3);
@@ -73,7 +73,7 @@ class InventoryFunctionsTest {
     @Test
     void able_to_edit_value_of_existing_item(){
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
-        ItemWrapper item1 = new ItemWrapper("100.00", "1234567890", "Theodore");
+        Item item1 = new Item("100.00", "1234567890", "Theodore");
 
         inventoryFunctions.editValue(item1, "1000000.00");
         String actual = item1.getValue();
@@ -85,7 +85,7 @@ class InventoryFunctionsTest {
     @Test
     void able_to_edit_serial_number_of_existing_item(){
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
-        ItemWrapper item1 = new ItemWrapper("100.00", "1234567890", "Theodore");
+        Item item1 = new Item("100.00", "1234567890", "Theodore");
 
         inventoryFunctions.editSerialNumber(item1, "0000000000", "1234567890");
         String actual = item1.getSerialNumber();
@@ -97,7 +97,7 @@ class InventoryFunctionsTest {
     @Test
     void able_to_edit_name_of_existing_item(){
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
-        ItemWrapper item1 = new ItemWrapper("100.00", "1234567890", "Theodore");
+        Item item1 = new Item("100.00", "1234567890", "Theodore");
 
         inventoryFunctions.editName(item1, "Simon");
         String actual = item1.getName();
@@ -126,10 +126,10 @@ class InventoryFunctionsTest {
     void able_to_search_inventory_by_name(){
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
-        ItemWrapper item1 = new ItemWrapper("100.00", "1234567891", "Theodore");
-        ItemWrapper item2 = new ItemWrapper("100.00", "1234567890", "Simon");
-        ItemWrapper item3 = new ItemWrapper("100.00", "1234567890", "Alvin");
-        ArrayList<ItemWrapper> itemsList = new ArrayList<>();
+        Item item1 = new Item("100.00", "1234567891", "Theodore");
+        Item item2 = new Item("100.00", "1234567890", "Simon");
+        Item item3 = new Item("100.00", "1234567890", "Alvin");
+        ArrayList<Item> itemsList = new ArrayList<>();
         itemsList.add(item1);
         itemsList.add(item2);
         itemsList.add(item3);
@@ -147,10 +147,10 @@ class InventoryFunctionsTest {
     void able_to_search_inventory_by_serial_number(){
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
-        ItemWrapper item1 = new ItemWrapper("100.00", "1234567891", "Theodore");
-        ItemWrapper item2 = new ItemWrapper("100.00", "1234567890", "Simon");
-        ItemWrapper item3 = new ItemWrapper("100.00", "1234567890", "Alvin");
-        ArrayList<ItemWrapper> itemsList = new ArrayList<>();
+        Item item1 = new Item("100.00", "1234567891", "Theodore");
+        Item item2 = new Item("100.00", "1234567890", "Simon");
+        Item item3 = new Item("100.00", "1234567890", "Alvin");
+        ArrayList<Item> itemsList = new ArrayList<>();
         itemsList.add(item1);
         itemsList.add(item2);
         itemsList.add(item3);

@@ -2,10 +2,8 @@ package ucf.assignments;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,8 +12,8 @@ import java.util.Set;
 
 public class InventoryFunctions {
     private Set<String> serialNumSet = new HashSet<>();
-    private ArrayList<ItemWrapper> allItems = new ArrayList<>();
-    private ArrayList<ItemWrapper> filteredItems = new ArrayList<>();
+    private ArrayList<Item> allItems = new ArrayList<>();
+    private ArrayList<Item> filteredItems = new ArrayList<>();
 
     public void setSerialNumSet(Set<String> serialNumSet){
         this.serialNumSet = serialNumSet;
@@ -25,30 +23,30 @@ public class InventoryFunctions {
         return serialNumSet;
     }
 
-    public void setItemObservableList(ObservableList<ItemWrapper> observableList){
+    public void setItemObservableList(ObservableList<Item> observableList){
         this.allItems = new ArrayList<>(observableList);
     }
 
-    public ArrayList<ItemWrapper> getAllItems(){
+    public ArrayList<Item> getAllItems(){
         return allItems;
     }
 
-    public void setAllItems(ArrayList<ItemWrapper> allItems){
+    public void setAllItems(ArrayList<Item> allItems){
         this.allItems = allItems;
     }
 
-    public ObservableList<ItemWrapper> getAllItemsObservable(){
+    public ObservableList<Item> getAllItemsObservable(){
         return FXCollections.observableArrayList(allItems);
     }
 
-    public ObservableList<ItemWrapper> getFilteredItems(){
+    public ObservableList<Item> getFilteredItems(){
         return FXCollections.observableArrayList(filteredItems);
     }
 
     public void addItem(String name, String serialNumber, String value){
         String newValue = formatCurrency(value);
 
-        ItemWrapper newItem = new ItemWrapper(newValue, serialNumber, name);
+        Item newItem = new Item(newValue, serialNumber, name);
 
         //add serial number to hashset
         serialNumSet.add(serialNumber);
@@ -57,23 +55,23 @@ public class InventoryFunctions {
         allItems.add(newItem);
     }
 
-    public void deleteItem(ItemWrapper selectedItem){
+    public void deleteItem(Item selectedItem){
         //remove serial number from serial number list
         serialNumSet.remove(selectedItem.getSerialNumber());
         //remove item from list
         allItems.remove(selectedItem);
     }
 
-    public void editName(ItemWrapper selectedItem, String newName){
+    public void editName(Item selectedItem, String newName){
         selectedItem.setName(newName);
     }
 
-    public void editValue(ItemWrapper selectedItem, String newValue){
+    public void editValue(Item selectedItem, String newValue){
         newValue = formatCurrency(newValue);
         selectedItem.setValue(newValue);
     }
 
-    public void editSerialNumber(ItemWrapper selectedItem, String newSerialNum, String oldSerialNum){
+    public void editSerialNumber(Item selectedItem, String newSerialNum, String oldSerialNum){
         serialNumSet.remove(oldSerialNum);
         serialNumSet.add(newSerialNum);
         selectedItem.setSerialNumber(newSerialNum);
@@ -81,7 +79,7 @@ public class InventoryFunctions {
 
     public void searchByName(String name){
         filteredItems.clear();
-        for(ItemWrapper item: allItems){
+        for(Item item: allItems){
             if(item.getName().toLowerCase().contains(name.toLowerCase())){
                 filteredItems.add(item);
             }
@@ -90,7 +88,7 @@ public class InventoryFunctions {
 
     public void searchBySerialNumber(String serialNum){
         filteredItems.clear();
-        for(ItemWrapper item: allItems){
+        for(Item item: allItems){
             if(item.getSerialNumber().toLowerCase().contains(serialNum.toLowerCase())){
                 filteredItems.add(item);
             }
