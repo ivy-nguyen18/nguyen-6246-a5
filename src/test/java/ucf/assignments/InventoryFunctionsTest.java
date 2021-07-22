@@ -124,10 +124,28 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_search_inventory_by_name(){
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        ItemWrapper item1 = new ItemWrapper("100.00", "1234567891", "Theodore");
+        ItemWrapper item2 = new ItemWrapper("100.00", "1234567890", "Simon");
+        ItemWrapper item3 = new ItemWrapper("100.00", "1234567890", "Alvin");
+        ArrayList<ItemWrapper> itemsList = new ArrayList<>();
+        itemsList.add(item1);
+        itemsList.add(item2);
+        itemsList.add(item3);
+
+        inventoryFunctions.setAllItems(itemsList);
+        inventoryFunctions.searchByName("Alvin");
+
+        int actual = inventoryFunctions.getFilteredItems().size();
+        int expected = 1;
+
+        assertEquals(actual, expected);
     }
 
     @Test
     void able_to_search_inventory_by_serial_number(){
+
     }
 
     @Test
