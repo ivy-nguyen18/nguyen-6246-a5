@@ -14,8 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class JsonFiles extends FileFunctions{
-    private ObservableList<Item> itemObservableList;
-
 
     //read from JSON
     public List<Item> loadFromPrevious(File file){

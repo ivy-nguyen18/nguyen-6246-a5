@@ -2,9 +2,31 @@
 'https://plantuml.com/class-diagram
 
 class FileFunctions{
-    + storeAsJSON()
-    + storeAsHTML()
-    + storeAsTSV()
+    - itemObservableList = ObservableList<Item>
+    + readFileFormatted(String,File)
+    + openFile(): File
+    + saveAs(): File
+    + storeFileFormatted(String, File)
+    + getItemObservableList(): ObservableList<Item>
+    + setItemObservableList(ObservableList<Item>)
+    - observableListToArrayList(ObservableList<Item>): ArrayList<Item>
+}
+
+class JsonFiles{
+    + loadFromPrevious(File): List<Item>
+    + saveFIle(ArrayList<Item>, File)
+}
+
+class TsvFiles{
+    + loadFromPrevious(File): List<Item>
+    + saveFIle(ArrayList<Item>, File)
+    - parseStringList(List<String)): List<Item>
+    - stringArrayAsItem(String []): Item
+    - itemAsStringArray(Item): String[]
+    - concatenateAllItemStrings(ArrayList<Item>): String
+}
+
+class HtmlFiles{
 }
 
 class Inventory{
@@ -95,6 +117,8 @@ class Item{
     + setName(String)
 }
 
+
+
 javafx.Application <|- Inventory
 Inventory -- InventoryController
 InventoryController -- InventoryFunctions
@@ -102,7 +126,8 @@ InventoryController -- Item
 InventoryFunctions -- Item
 FileFunctions -- InventoryController
 Item -- FileFunctions
-
-
+FileFunctions <|- JsonFiles
+FileFunctions <|- TsvFiles
+FileFunctions <|- HtmlFiles
 
 @enduml

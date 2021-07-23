@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class TSVFiles extends FileFunctions{
+public class TsvFiles extends FileFunctions{
     //read from TSV
     public List<Item> loadFromPrevious(File file){
         List<String> lines = Collections.emptyList();
@@ -23,10 +23,12 @@ public class TSVFiles extends FileFunctions{
             e.printStackTrace();
         }
 
+        //return resulting list of items
         return parseStringList(lines);
     }
 
-    public List<Item> parseStringList(List<String> lines){
+    private List<Item> parseStringList(List<String> lines){
+        //parse using tab
         List<Item> itemList = new ArrayList<>();
         for(String line: lines){
             String [] stringArray = line.split("\t");
@@ -40,6 +42,7 @@ public class TSVFiles extends FileFunctions{
     }
 
     private String[] itemAsStringArray(Item item){
+        //set string array with item variables
         String [] stringArray =  new String[3];
         stringArray[0] = item.getValue();
         stringArray[1] = item.getSerialNumber();
@@ -48,6 +51,8 @@ public class TSVFiles extends FileFunctions{
     }
 
     private String concatenateAllItemStrings(ArrayList<Item> allItems){
+
+        //piece together as one big string
         StringBuilder builder = new StringBuilder();
         for(Item item: allItems){
             String [] stringArray = itemAsStringArray(item);

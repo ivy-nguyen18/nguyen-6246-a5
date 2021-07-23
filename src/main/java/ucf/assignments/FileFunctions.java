@@ -33,7 +33,7 @@ public class FileFunctions {
                 jsonFiles.saveFile(itemList, selectedFile);
             }
             case ".txt" -> {
-                TSVFiles tsvFiles = new TSVFiles();
+                TsvFiles tsvFiles = new TsvFiles();
                 tsvFiles.saveFile(itemList,selectedFile);
             }
             default ->{
@@ -56,7 +56,7 @@ public class FileFunctions {
                 itemObservableList.addAll(itemList);
             }
             case ".txt" -> {
-                TSVFiles tsvFiles = new TSVFiles();
+                TsvFiles tsvFiles = new TsvFiles();
                 itemList = tsvFiles.loadFromPrevious(selectedFile);
                 itemObservableList.addAll(itemList);
             }
@@ -75,7 +75,7 @@ public class FileFunctions {
         fileStage.setTitle("Open");
 
         //set default directory to be user's home directory
-        //fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
         //add .json, .txt, and .html extensions
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JSON file","*.json"),
@@ -96,7 +96,7 @@ public class FileFunctions {
         fileStage.setTitle("Save As");
 
         //set default directory to be the user's home directory
-        //fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
         //add .json, .txt, and .html extensions
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JSON file (*.json)","*.json"),

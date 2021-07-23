@@ -335,13 +335,10 @@ public class InventoryController {
         //set new itemObservableList
         inventoryFunctions.setItemObservableList(itemObservableList);
 
-        System.out.println("Item observable list: ");
-        System.out.println(itemObservableList.size());
-
         itemTableView.setItems(itemObservableList);
     }
 
-    @FXML public void showErrorPopUp(String errorType){
+    public void showErrorPopUp(String errorType){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         switch (errorType) {
             case "serialNumberFormatError" -> {
