@@ -41,6 +41,7 @@ public class InventoryController {
     private File selectedFile;
     private final InventoryFunctions inventoryFunctions = new InventoryFunctions();
     private final Set<String> serialNumSet = new HashSet<>();
+    private final FileFunctions file = new FileFunctions();
 
     public void setPrimaryStage(Stage primaryStage){
         this.primaryStage = primaryStage;
@@ -48,19 +49,47 @@ public class InventoryController {
 
     @FXML
     public void saveClicked(ActionEvent actionEvent) {
+        //initialize FileFunctions with object
+        file.setItemObservableList(itemObservableList);
+
+        //call saveFile
+        //ArrayList<SerItem> serList = file.makeListSerializable(itemTableView.getItems());
+        //file.saveFile(serList, selectedFile);
     }
 
     @FXML
     public void saveAsClicked(ActionEvent actionEvent) {
+        //set item observableList in file functions
+        file.setItemObservableList(itemObservableList);
+
+        //set new file
+        this.selectedFile= file.saveAs();
+
+        //get the extension of the file and send to appropriate function
+        String fileName = selectedFile.toString();
+        String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+
+        //save the file
+        //file.saveFile(serList, selectedFile);
+
+        //call corresponding functions for file type
+        switch(fileType){
+            case ".json" -> {
+                //call json function
+            }
+            case ".txt" -> {
+                //call TSV function
+            }
+            default ->{
+                //call HTML function
+            }
+        }
     }
 
     @FXML
     public void openClicked(ActionEvent actionEvent) {
-        //initialize FileFunctions with object
-        FileFunctions file = new FileFunctions();
-
         //set item observableList in file functions
-        //file.setItemObservableList(itemObservableList);
+        file.setItemObservableList(itemObservableList);
 
         //set new file
         this.selectedFile = file.openFile();
