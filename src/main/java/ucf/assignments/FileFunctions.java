@@ -1,11 +1,19 @@
 package ucf.assignments;
 
+import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 
 public class FileFunctions {
+    private ObservableList<Item> itemObservableList;
+
+    public void setItemObservableList(ObservableList<Item> itemObservableList){
+        this.itemObservableList = itemObservableList;
+    }
+
+
     //store as JSON
     public void storeAsJSON(){
 

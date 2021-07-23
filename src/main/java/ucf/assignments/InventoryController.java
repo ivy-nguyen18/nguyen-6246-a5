@@ -56,6 +56,39 @@ public class InventoryController {
 
     @FXML
     public void openClicked(ActionEvent actionEvent) {
+        //initialize FileFunctions with object
+        FileFunctions file = new FileFunctions();
+
+        //set item observableList in file functions
+        //file.setItemObservableList(itemObservableList);
+
+        //set new file
+        this.selectedFile = file.openFile();
+
+        //get the extension of the file and send to appropriate function
+        String fileName = selectedFile.toString();
+        String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+
+        //call corresponding functions for file type
+        switch(fileType){
+            case ".json" -> {
+                //call json function
+            }
+            case ".txt" -> {
+                //call TSV function
+            }
+            default ->{
+                //call HTML function
+            }
+        }
+
+
+        //update itemObservableList
+        //load the selected file list from previous list
+        //set that list to the the current observable list and update table
+
+        //List<SerItem> newFile = file.loadFromPrevious(selectedFile);
+        //itemObservableList = file.makeListDeserializable(newFile);
     }
 
     @FXML
