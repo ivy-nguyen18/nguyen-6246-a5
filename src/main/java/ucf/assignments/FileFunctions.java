@@ -33,7 +33,8 @@ public class FileFunctions {
                 jsonFiles.saveFile(itemList, selectedFile);
             }
             case ".txt" -> {
-                //call TSV function
+                TSVFiles tsvFiles = new TSVFiles();
+                tsvFiles.saveFile(itemList,selectedFile);
             }
             default ->{
                 //call HTML function
@@ -55,7 +56,8 @@ public class FileFunctions {
                 itemObservableList.addAll(itemList);
             }
             case ".txt" -> {
-                //call TSV function
+                TSVFiles tsvFiles = new TSVFiles();
+
             }
             default ->{
                 //call HTML function
