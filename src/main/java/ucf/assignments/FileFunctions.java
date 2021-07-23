@@ -57,7 +57,8 @@ public class FileFunctions {
             }
             case ".txt" -> {
                 TSVFiles tsvFiles = new TSVFiles();
-
+                itemList = tsvFiles.loadFromPrevious(selectedFile);
+                itemObservableList.addAll(itemList);
             }
             default ->{
                 //call HTML function

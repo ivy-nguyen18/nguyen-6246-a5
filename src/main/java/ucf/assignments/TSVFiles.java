@@ -11,7 +11,33 @@ import java.util.Collections;
 import java.util.List;
 
 public class TSVFiles extends FileFunctions{
+    //read from TSV
+    public List<Item> loadFromPrevious(File file){
+        List<String> lines = Collections.emptyList();
+        try{
 
+            //read file into a list of Item
+            lines = Files.readAllLines(Paths.get(file.toString()));
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        return parseStringList(lines);
+    }
+
+    public List<Item> parseStringList(List<String> lines){
+        List<Item> itemList = new ArrayList<>();
+        for(String line: lines){
+            String [] stringArray = line.split("\t");
+            itemList.add(stringArrayAsItem(stringArray));
+        }
+        return itemList;
+    }
+
+    private Item stringArrayAsItem(String [] stringArray){
+        return new Item(stringArray[0], stringArray[1], stringArray[2]);
+    }
 
     private String[] itemAsStringArray(Item item){
         String [] stringArray =  new String[3];
