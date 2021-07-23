@@ -68,8 +68,7 @@ public class InventoryController {
 
         //set new file
         File checkFile = file.saveAs();
-
-
+        if(checkFile != null){
             this.selectedFile = checkFile;
 
             //get the extension of the file and send to appropriate function
@@ -78,6 +77,7 @@ public class InventoryController {
 
             //save the file
             file.storeFileFormatted(fileType, selectedFile);
+        }
 
     }
 
@@ -98,9 +98,10 @@ public class InventoryController {
 
             file.readFileFormatted(fileType,selectedFile);
 
-            //set that list to the the current observable list and update table
-            itemObservableList = file.getItemObservableList();
-            updateTableView();
+            //set that list to the the current observable list and update table;
+            updateTableView(file.getItemObservableList());
+
+            inventoryFunctions.loadPreviousSet(itemObservableList);
         }
     }
 
@@ -115,7 +116,7 @@ public class InventoryController {
         if(validateInputs(name, serialNumber, value)){
             initializeLabels();
             inventoryFunctions.addItem(name, serialNumber, value);
-            updateTableView();
+            updateTableView(inventoryFunctions.getAllItemsObservable());
         }
     }
 
@@ -153,8 +154,9 @@ public class InventoryController {
     @FXML
     public void deleteButtonClicked(ActionEvent actionEvent) {
         Item selectedItem = itemTableView.getSelectionModel().getSelectedItem();
+
         inventoryFunctions.deleteItem(selectedItem);
-        updateTableView();
+        updateTableView(inventoryFunctions.getAllItemsObservable());
     }
 
     @FXML
@@ -218,6 +220,7 @@ public class InventoryController {
 
     @FXML
     public void editName(TableColumn.CellEditEvent edittedCell){
+
         //get new changes
         Item itemSelected = itemTableView.getSelectionModel().getSelectedItem();
         String newName = edittedCell.getNewValue().toString();
@@ -225,7 +228,7 @@ public class InventoryController {
         //if name is in correct format, update list
         if(inventoryFunctions.validateName(newName)){
             inventoryFunctions.editName(itemSelected, newName);
-            updateTableView();
+            updateTableView(inventoryFunctions.getAllItemsObservable());
         }else{
             //else display popup
             showErrorPopUp("nameFormatError");
@@ -244,7 +247,7 @@ public class InventoryController {
         //if value is in correct format, update list
         if(inventoryFunctions.validateValue(newValue)){
             inventoryFunctions.editValue(itemSelected, newValue);
-            updateTableView();
+            updateTableView(inventoryFunctions.getAllItemsObservable());
         }else{
             //if value is not in correct format, display error
             showErrorPopUp("valueFormatError");
@@ -264,7 +267,7 @@ public class InventoryController {
         //if serial number is not a duplicate and is in the correct format, update list
         if(!inventoryFunctions.isDuplicate(newSerialNum) && inventoryFunctions.validateSerialNumberFormat(newSerialNum)){
             inventoryFunctions.editSerialNumber(itemSelected, newSerialNum, oldSerialNum);
-            updateTableView();
+            updateTableView(inventoryFunctions.getAllItemsObservable());
         }else{
             //if serial number is not in correct format, display appropriate error
             if(!inventoryFunctions.validateSerialNumberFormat(newSerialNum)){
@@ -295,6 +298,7 @@ public class InventoryController {
     }
 
     private boolean validateInputs(String name, String serialNumber, String value){
+        inventoryFunctions.setItemObservableList(itemObservableList);
         boolean isValid = true;
         //does name have enough characters
         if(!inventoryFunctions.validateName(name)){
@@ -325,12 +329,16 @@ public class InventoryController {
         return isValid;
     }
 
-    private void updateTableView(){
-        itemObservableList = inventoryFunctions.getAllItemsObservable();
+    private void updateTableView(ObservableList<Item> allItemsList){
+        itemObservableList = allItemsList;
+
+        //set new itemObservableList
+        inventoryFunctions.setItemObservableList(itemObservableList);
+
+        System.out.println("Item observable list: ");
+        System.out.println(itemObservableList.size());
+
         itemTableView.setItems(itemObservableList);
-        for(Item item: itemObservableList){
-            System.out.println(item.getName());
-        }
     }
 
     @FXML public void showErrorPopUp(String errorType){

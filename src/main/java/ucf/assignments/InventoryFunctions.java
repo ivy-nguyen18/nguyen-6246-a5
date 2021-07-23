@@ -51,6 +51,12 @@ public class InventoryFunctions {
         allItems.add(newItem);
     }
 
+    public void loadPreviousSet(ObservableList<Item> itemObservableList){
+        serialNumSet.clear();
+        for(Item item: itemObservableList){
+            serialNumSet.add(item.getSerialNumber());
+        }
+    }
     public void deleteItem(Item selectedItem){
         //remove serial number from serial number list
         serialNumSet.remove(selectedItem.getSerialNumber());

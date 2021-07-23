@@ -51,7 +51,6 @@ public class FileFunctions {
             case ".json" -> {
                 JsonFiles jsonFiles = new JsonFiles();
                 itemList = jsonFiles.loadFromPrevious(selectedFile);
-
                 //add items from itemList to observable list
                 itemObservableList.addAll(itemList);
             }
