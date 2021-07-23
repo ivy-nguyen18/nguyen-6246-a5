@@ -5,6 +5,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileFunctions {
     private ObservableList<Item> itemObservableList;
@@ -13,20 +15,46 @@ public class FileFunctions {
         this.itemObservableList = itemObservableList;
     }
 
-
-    //store as JSON
-    public void storeAsJSON(){
-
+    public ObservableList<Item> getItemObservableList(){
+        return itemObservableList ;
     }
 
-    //store as HTML
-    public void storeAsHTML(){
-
+    public void storeFileFormatted(String fileType, File selectedFile){
+        //call corresponding functions for file type
+        switch(fileType){
+            case ".json" -> {
+                //call json function
+            }
+            case ".txt" -> {
+                //call TSV function
+            }
+            default ->{
+                //call HTML function
+            }
+        }
     }
 
-    //store as TSV
-    public void storeAsTSV(){
+    public void readFileFormatted(String fileType, File selectedFile){
+        //clear whatever was on the list
+        itemObservableList.clear();
 
+        List<Item> itemList = new ArrayList<>();
+        //call corresponding functions for file type
+        switch(fileType){
+            case ".json" -> {
+                JsonFiles jsonFiles = new JsonFiles();
+                itemList = jsonFiles.loadFromPrevious(selectedFile);
+
+                //add items from itemList to observable list
+                itemObservableList.addAll(itemList);
+            }
+            case ".txt" -> {
+                //call TSV function
+            }
+            default ->{
+                //call HTML function
+            }
+        }
     }
 
     public File openFile(){
@@ -38,7 +66,7 @@ public class FileFunctions {
         fileStage.setTitle("Open");
 
         //set default directory to be user's home directory
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        //fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
         //add .json, .txt, and .html extensions
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JSON file","*.json"),
@@ -59,12 +87,12 @@ public class FileFunctions {
         fileStage.setTitle("Save As");
 
         //set default directory to be the user's home directory
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        //fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
         //add .json, .txt, and .html extensions
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JSON file","*.json"),
-                new FileChooser.ExtensionFilter("HTML file", "*.html"),
-                new FileChooser.ExtensionFilter("TSV file","*.txt"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JSON file (*.json)","*.json"),
+                new FileChooser.ExtensionFilter("HTML file (*.html)", "*.html"),
+                new FileChooser.ExtensionFilter("TSV file (*.txt)","*.txt"));
 
         //show the file stage
         //return file chosen

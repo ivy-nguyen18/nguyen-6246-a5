@@ -41,7 +41,6 @@ public class InventoryController {
     private File selectedFile;
     private final InventoryFunctions inventoryFunctions = new InventoryFunctions();
     private final Set<String> serialNumSet = new HashSet<>();
-    private final FileFunctions file = new FileFunctions();
 
     public void setPrimaryStage(Stage primaryStage){
         this.primaryStage = primaryStage;
@@ -49,75 +48,60 @@ public class InventoryController {
 
     @FXML
     public void saveClicked(ActionEvent actionEvent) {
+        FileFunctions file = new FileFunctions();
         //initialize FileFunctions with object
         file.setItemObservableList(itemObservableList);
 
+        //get the extension of the file and send to appropriate function
+        String fileName = selectedFile.toString();
+        String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+
         //call saveFile
-        //ArrayList<SerItem> serList = file.makeListSerializable(itemTableView.getItems());
-        //file.saveFile(serList, selectedFile);
+        file.storeFileFormatted(fileType, selectedFile);
     }
 
     @FXML
     public void saveAsClicked(ActionEvent actionEvent) {
+        FileFunctions file = new FileFunctions();
         //set item observableList in file functions
         file.setItemObservableList(itemObservableList);
 
         //set new file
-        this.selectedFile= file.saveAs();
+        File checkFile = file.saveAs();
+        System.out.println(checkFile.isFile());
 
-        //get the extension of the file and send to appropriate function
-        String fileName = selectedFile.toString();
-        String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+            this.selectedFile = checkFile;
 
-        //save the file
-        //file.saveFile(serList, selectedFile);
+            //get the extension of the file and send to appropriate function
+            String fileName = selectedFile.toString();
+            String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
 
-        //call corresponding functions for file type
-        switch(fileType){
-            case ".json" -> {
-                //call json function
-            }
-            case ".txt" -> {
-                //call TSV function
-            }
-            default ->{
-                //call HTML function
-            }
-        }
+            //save the file
+            file.storeFileFormatted(fileType, selectedFile);
+
     }
 
     @FXML
     public void openClicked(ActionEvent actionEvent) {
+        FileFunctions file = new FileFunctions();
         //set item observableList in file functions
         file.setItemObservableList(itemObservableList);
 
         //set new file
-        this.selectedFile = file.openFile();
+        File checkFile = file.openFile();
+        if(checkFile != null){
+            this.selectedFile = checkFile;
 
-        //get the extension of the file and send to appropriate function
-        String fileName = selectedFile.toString();
-        String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+            //get the extension of the file and send to appropriate function
+            String fileName = selectedFile.toString();
+            String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
 
-        //call corresponding functions for file type
-        switch(fileType){
-            case ".json" -> {
-                //call json function
-            }
-            case ".txt" -> {
-                //call TSV function
-            }
-            default ->{
-                //call HTML function
-            }
+            file.readFileFormatted(fileType,selectedFile);
+
+            //set that list to the the current observable list and update table
+            itemObservableList = file.getItemObservableList();
+            updateTableView();
         }
-
-
-        //update itemObservableList
-        //load the selected file list from previous list
-        //set that list to the the current observable list and update table
-
-        //List<SerItem> newFile = file.loadFromPrevious(selectedFile);
-        //itemObservableList = file.makeListDeserializable(newFile);
     }
 
     @FXML
@@ -180,7 +164,7 @@ public class InventoryController {
 
         //reset search field
         searchByComboBox.getSelectionModel().clearSelection();
-        searchByComboBox.setPromptText("Search by...");
+        searchByComboBox.setValue("Search by...");
         searchByTextField.clear();
         searchByTextField.setEditable(false);
     }

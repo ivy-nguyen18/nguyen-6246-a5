@@ -16,7 +16,7 @@ import java.util.List;
 public class JsonFiles extends FileFunctions{
     private ObservableList<Item> itemObservableList;
 
-    //convert to JSON
+
     //read from JSON
     public List<Item> loadFromPrevious(File file){
         List<Item> itemList = new ArrayList<>();
@@ -36,6 +36,7 @@ public class JsonFiles extends FileFunctions{
         return itemList;
     }
 
+    //convert to JSON
     public void saveFile(ArrayList<Item> allItems, File selectedFile){
         //new Gson object
         Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
