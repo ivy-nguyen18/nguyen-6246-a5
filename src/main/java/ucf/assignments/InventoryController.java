@@ -68,7 +68,7 @@ public class InventoryController {
 
         //set new file
         File checkFile = file.saveAs();
-        System.out.println(checkFile.isFile());
+
 
             this.selectedFile = checkFile;
 

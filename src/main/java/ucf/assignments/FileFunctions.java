@@ -19,11 +19,18 @@ public class FileFunctions {
         return itemObservableList ;
     }
 
+    private ArrayList<Item> observableListToArrayList(ObservableList<Item> observableList){
+        //copy elements in ObservableList to ArrayList
+        return new ArrayList<>(observableList);
+    }
+
     public void storeFileFormatted(String fileType, File selectedFile){
         //call corresponding functions for file type
+        ArrayList <Item> itemList = observableListToArrayList(itemObservableList);
         switch(fileType){
             case ".json" -> {
-                //call json function
+                JsonFiles jsonFiles = new JsonFiles();
+                jsonFiles.saveFile(itemList, selectedFile);
             }
             case ".txt" -> {
                 //call TSV function
@@ -94,10 +101,10 @@ public class FileFunctions {
                 new FileChooser.ExtensionFilter("HTML file (*.html)", "*.html"),
                 new FileChooser.ExtensionFilter("TSV file (*.txt)","*.txt"));
 
+
         //show the file stage
         //return file chosen
         return fileChooser.showSaveDialog(fileStage);
     }
-
 
 }
