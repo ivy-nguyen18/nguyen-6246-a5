@@ -36,5 +36,18 @@ public class JsonFiles extends FileFunctions{
         return itemList;
     }
 
+    public void saveFile(ArrayList<Item> allItems, File selectedFile){
+        //new Gson object
+        Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
 
+        try {
+            //write in list of allItems into file
+            FileWriter writer = new FileWriter(selectedFile);
+            gson.toJson(allItems, writer);
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
