@@ -57,7 +57,6 @@ public class TsvFiles extends FileFunctions{
         for(Item item: allItems){
             String [] stringArray = itemAsStringArray(item);
             builder.append((String.format("%s\t%s\t%s\n", stringArray[0], stringArray[1], stringArray[2])));
-            System.out.println((String.format("%s\t%s\t%s\n", stringArray[0], stringArray[1], stringArray[2])));
         }
         return builder.toString();
     }

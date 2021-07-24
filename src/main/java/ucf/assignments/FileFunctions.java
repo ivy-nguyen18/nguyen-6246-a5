@@ -37,7 +37,8 @@ public class FileFunctions {
                 tsvFiles.saveFile(itemList,selectedFile);
             }
             default ->{
-                //call HTML function
+                HtmlFiles htmlFiles = new HtmlFiles();
+                htmlFiles.saveFile(itemList,selectedFile);
             }
         }
     }
@@ -61,7 +62,9 @@ public class FileFunctions {
                 itemObservableList.addAll(itemList);
             }
             default ->{
-                //call HTML function
+                HtmlFiles htmlFiles = new HtmlFiles();
+                itemList = htmlFiles.loadFromPrevious(selectedFile);
+                itemObservableList.addAll(itemList);
             }
         }
     }
