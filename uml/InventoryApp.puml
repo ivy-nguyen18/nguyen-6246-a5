@@ -1,6 +1,11 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+class Inventory{
+    + main(String [])
+    + start(Stage)
+}
+
 class FileFunctions{
     - itemObservableList = ObservableList<Item>
     + readFileFormatted(String,File)
@@ -14,12 +19,12 @@ class FileFunctions{
 
 class JsonFiles{
     + loadFromPrevious(File): List<Item>
-    + saveFIle(ArrayList<Item>, File)
+    + saveFile(ArrayList<Item>, File)
 }
 
 class TsvFiles{
     + loadFromPrevious(File): List<Item>
-    + saveFIle(ArrayList<Item>, File)
+    + saveFile(ArrayList<Item>, File)
     - parseStringList(List<String)): List<Item>
     - stringArrayAsItem(String []): Item
     - itemAsStringArray(Item): String[]
@@ -27,11 +32,14 @@ class TsvFiles{
 }
 
 class HtmlFiles{
-}
-
-class Inventory{
-    + main(String [])
-    + start(Stage)
+     + loadFromPrevious(File): List<Item>
+     + saveFile(ArrayList<Item>, File)
+     - trimToTableContent(String): List<Item>
+     - parseStringAsList(String): List<Item>
+     - stringArrayAsItem(String[]): Item
+     - formatHTML(ArrayList<Item>): String
+     - itemAsStringArray(Item): String[]
+     - formatHTMLTable(ArrayList<Item>): String
 }
 
 class InventoryController{
@@ -119,15 +127,18 @@ class Item{
 
 
 
-javafx.Application <|- Inventory
+javafx.Application <|-- Inventory
 Inventory -- InventoryController
 InventoryController -- InventoryFunctions
 InventoryController -- Item
 InventoryFunctions -- Item
 FileFunctions -- InventoryController
 Item -- FileFunctions
-FileFunctions <|- JsonFiles
-FileFunctions <|- TsvFiles
-FileFunctions <|- HtmlFiles
+Item -- JsonFiles
+Item -- TsvFiles
+Item -- HtmlFiles
+FileFunctions <|-- JsonFiles
+FileFunctions <|-- TsvFiles
+FileFunctions <|-- HtmlFiles
 
 @enduml

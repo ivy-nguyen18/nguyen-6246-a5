@@ -1,20 +1,15 @@
 package ucf.assignments;
 
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class HtmlFiles {
-    private final int PAD = 5;
     //read from HTML
     public List<Item> loadFromPrevious(File file){
         List<Item> itemList = new ArrayList<>();
@@ -31,25 +26,32 @@ public class HtmlFiles {
     }
 
     private List<Item> trimToTableContent(String content){
+        //take out extra content in document to get table content
         content = content.strip();
         content = content.replaceAll("[\\n\\t\\r]", "");
         String temp = content.substring(content.indexOf("<tr>"), content.lastIndexOf("</table>"));
-        String headers = temp.substring(temp.indexOf("<tr>"), temp.indexOf("</tr>") + PAD);
+        String pad = "</tr>";
+        String headers = temp.substring(temp.indexOf("<tr>"), temp.indexOf("</tr>") + pad.length());
         String tableHtml = temp.replace(headers, "");
         tableHtml = tableHtml.replaceAll("<tr>", "");
-        tableHtml = tableHtml.replaceAll("</tr>", "\n");
         tableHtml = tableHtml.replaceAll("<td>", "");
+        //separate each item by newline character
+        tableHtml = tableHtml.replaceAll("</tr>", "\n");
+        //separate each variable in item by a space
         tableHtml = tableHtml.replaceAll("</td>", " ");
+
         tableHtml = tableHtml.trim();
 
         return parseStringAsList(tableHtml);
     }
 
     private List<Item> parseStringAsList(String tableContent){
+        //parse each item by newline
         String [] itemArray = tableContent.split("\n");
         List<Item> itemList = new ArrayList<>();
         for(String line: itemArray){
             line = line.trim();
+            //split by space
             String [] stringArray = line.split("\\s+");
             itemList.add(stringArrayAsItem(stringArray));
         }
@@ -59,6 +61,7 @@ public class HtmlFiles {
 
 
     private Item stringArrayAsItem(String [] stringArray){
+        //instantiate Item with variables
         return new Item(stringArray[0], stringArray[1], stringArray[2]);
     }
 
@@ -76,6 +79,7 @@ public class HtmlFiles {
         }
     }
     private String formatHTML(ArrayList<Item> allItems){
+        //format html file
 
         return ("<!DOCTYPE html>\n"+
                             "<html>\n" +

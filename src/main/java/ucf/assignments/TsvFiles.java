@@ -38,6 +38,7 @@ public class TsvFiles extends FileFunctions{
     }
 
     private Item stringArrayAsItem(String [] stringArray){
+        //instantiate Item with variables
         return new Item(stringArray[0], stringArray[1], stringArray[2]);
     }
 
