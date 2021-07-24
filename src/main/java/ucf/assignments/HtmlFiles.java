@@ -22,8 +22,7 @@ public class HtmlFiles {
             //read file into a list of Item
             Path path = Paths.get(String.valueOf(file));
             String content = Files.readString(path);
-            System.out.println(content);
-            trimToTableContent(content);
+            itemList = trimToTableContent(content);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -31,7 +30,7 @@ public class HtmlFiles {
         return itemList;
     }
 
-    private void trimToTableContent(String content){
+    private List<Item> trimToTableContent(String content){
         content = content.strip();
         content = content.replaceAll("[\\n\\t\\r]", "");
         String temp = content.substring(content.indexOf("<tr>"), content.lastIndexOf("</table>"));
@@ -42,10 +41,20 @@ public class HtmlFiles {
         tableHtml = tableHtml.replaceAll("<td>", "");
         tableHtml = tableHtml.replaceAll("</td>", " ");
         tableHtml = tableHtml.trim();
-        String [] tableArray = tableHtml.split("\\s+");
 
-        System.out.println(tableHtml);
+        return parseStringAsList(tableHtml);
+    }
 
+    private List<Item> parseStringAsList(String tableContent){
+        String [] itemArray = tableContent.split("\n");
+        List<Item> itemList = new ArrayList<>();
+        for(String line: itemArray){
+            line = line.trim();
+            String [] stringArray = line.split("\\s+");
+            itemList.add(stringArrayAsItem(stringArray));
+        }
+
+        return itemList;
     }
 
 
