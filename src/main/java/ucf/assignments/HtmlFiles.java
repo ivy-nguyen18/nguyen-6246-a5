@@ -7,29 +7,50 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class HtmlFiles {
+    private final int PAD = 5;
     //read from HTML
     public List<Item> loadFromPrevious(File file){
         List<Item> itemList = new ArrayList<>();
         try{
-            //new GSON object
-            Gson gson = new Gson();
-
             //read file into a list of Item
-            Reader reader = Files.newBufferedReader(Paths.get(String.valueOf(file)));
-            itemList = Arrays.asList(gson.fromJson(reader, Item[].class));
-
-            reader.close();
+            Path path = Paths.get(String.valueOf(file));
+            String content = Files.readString(path);
+            System.out.println(content);
+            trimToTableContent(content);
         }catch(IOException e){
             e.printStackTrace();
         }
 
         return itemList;
+    }
+
+    private void trimToTableContent(String content){
+        content = content.strip();
+        content = content.replaceAll("[\\n\\t\\r]", "");
+        String temp = content.substring(content.indexOf("<tr>"), content.lastIndexOf("</table>"));
+        String headers = temp.substring(temp.indexOf("<tr>"), temp.indexOf("</tr>") + PAD);
+        String tableHtml = temp.replace(headers, "");
+        tableHtml = tableHtml.replaceAll("<tr>", "");
+        tableHtml = tableHtml.replaceAll("</tr>", "\n");
+        tableHtml = tableHtml.replaceAll("<td>", "");
+        tableHtml = tableHtml.replaceAll("</td>", " ");
+        tableHtml = tableHtml.trim();
+        String [] tableArray = tableHtml.split("\\s+");
+
+        System.out.println(tableHtml);
+
+    }
+
+
+    private Item stringArrayAsItem(String [] stringArray){
+        return new Item(stringArray[0], stringArray[1], stringArray[2]);
     }
 
     //convert to HTML
@@ -38,14 +59,14 @@ public class HtmlFiles {
         try {
             //write in list of allItems into file
             FileWriter writer = new FileWriter(selectedFile);
-            writer.write(formatHTML(selectedFile,allItems));
+            writer.write(formatHTML(allItems));
             writer.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private String formatHTML(File selectedFile, ArrayList<Item> allItems){
+    private String formatHTML(ArrayList<Item> allItems){
 
         return ("<!DOCTYPE html>\n"+
                             "<html>\n" +
