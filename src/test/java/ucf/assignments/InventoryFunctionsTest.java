@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class InventoryFunctionsTest {
     @Test
     @DisplayName("Sort Name Ascending")
-    void able_to_inventory_by_value(){
+    void able_to_inventory_by_name1(){
         //create inventory functions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -44,7 +44,7 @@ class InventoryFunctionsTest {
 
     @Test
     @DisplayName("Sort Name descending")
-    void able_to_inventory_by_value2(){
+    void able_to_inventory_by_name2(){
         //create inventory functions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -72,6 +72,133 @@ class InventoryFunctionsTest {
         assertEquals(actual, expected);
     }
 
+    @Test
+    @DisplayName("Sort Value Ascending")
+    void able_to_inventory_by_value1(){
+        //create inventory functions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //add items to list
+        Item item1 = new Item("200.00", "1234567890", "Theodore");
+        Item item2 = new Item("10.00", "1234567890", "Simon");
+        Item item3 = new Item("100.00", "1234567890", "Alvin");
+        ArrayList<Item> itemsList = new ArrayList<>();
+        itemsList.add(item1);
+        itemsList.add(item2);
+        itemsList.add(item3);
+        inventoryFunctions.setAllItems(itemsList);
+
+        //sort the list
+        List<Item> sortedList = inventoryFunctions.sortValueAscending(itemsList);
+        boolean actual = true;
+        boolean expected = true;
+
+        //compare item values in list to check if sorted
+        double prev = -1.00;
+        for(Item item: sortedList){
+            if(item.getValueAmount() < prev){
+                actual = false;
+                break;
+            }
+            prev = item.getValueAmount();
+        }
+
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    @DisplayName("Sort Value Descending")
+    void able_to_inventory_by_value2(){
+        //create inventory functions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //add items to list
+        Item item1 = new Item("200.00", "1234567890", "Theodore");
+        Item item2 = new Item("10.00", "1234567890", "Simon");
+        Item item3 = new Item("100.00", "1234567890", "Alvin");
+        ArrayList<Item> itemsList = new ArrayList<>();
+        itemsList.add(item1);
+        itemsList.add(item2);
+        itemsList.add(item3);
+        inventoryFunctions.setAllItems(itemsList);
+
+        //sort the list
+        List<Item> sortedList = inventoryFunctions.sortValueDescending(itemsList);
+        boolean actual = true;
+        boolean expected = true;
+
+        //compare item values in list to check if sorted
+        double prev = 10000000000.00;
+        for(Item item: sortedList){
+            if(item.getValueAmount() > prev){
+                actual = false;
+                break;
+            }
+            prev = item.getValueAmount();
+        }
+
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    @DisplayName("Sort Serial Number Ascending")
+    void able_to_inventory_by_serial_number1(){
+        //create inventory functions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //add items to list
+        Item item1 = new Item("200.00", "1234567892", "Theodore");
+        Item item2 = new Item("10.00", "F234567890", "Simon");
+        Item item3 = new Item("100.00", "1234567H90", "Alvin");
+        ArrayList<Item> itemsList = new ArrayList<>();
+        itemsList.add(item1);
+        itemsList.add(item2);
+        itemsList.add(item3);
+        inventoryFunctions.setAllItems(itemsList);
+
+        //sort the list
+        List<Item> sortedList = inventoryFunctions.sortSerialNumberAscending(itemsList);
+        StringBuilder sortedNames = new StringBuilder();
+        for(Item item: sortedList){
+            sortedNames.append(item.getName());
+        }
+
+        //check if list is sorted by serialNumber
+        String actual = sortedNames.toString();
+        String expected = "TheodoreAlvinSimon";
+
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    @DisplayName("Sort Serial Number descending")
+    void able_to_inventory_by_serial_number2(){
+        //create inventory functions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //add items to list
+        Item item1 = new Item("200.00", "1234567892", "Theodore");
+        Item item2 = new Item("10.00", "1234567890", "Simon");
+        Item item3 = new Item("100.00", "1234567891", "Alvin");
+        ArrayList<Item> itemsList = new ArrayList<>();
+        itemsList.add(item1);
+        itemsList.add(item2);
+        itemsList.add(item3);
+        inventoryFunctions.setAllItems(itemsList);
+
+        //sort the list
+        List<Item> sortedList = inventoryFunctions.sortSerialNumberDescending(itemsList);
+        StringBuilder sortedNames = new StringBuilder();
+        for(Item item: sortedList){
+            sortedNames.append(item.getName());
+        }
+
+        //check if list is sorted by serialNumber
+        String actual = sortedNames.toString();
+        String expected = "TheodoreAlvinSimon";
+
+        assertEquals(actual, expected);
+    }
 
     @Test
     @DisplayName("List holds atleast 100 items")
