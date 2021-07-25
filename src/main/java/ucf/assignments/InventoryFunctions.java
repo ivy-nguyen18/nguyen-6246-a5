@@ -1,16 +1,19 @@
 /*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
  *  Copyright 2021 Ivy Nguyen
  */
 package ucf.assignments;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.*;
 
+/**
+ * The InventoryFunctions class provides functions for sorting, editing, adding, deleting,
+ * and validating any input from the InventoryController
+ */
 public class InventoryFunctions {
     private Set<String> serialNumSet = new HashSet<>();
     private ArrayList<Item> allItems = new ArrayList<>();
@@ -50,18 +53,6 @@ public class InventoryFunctions {
         return FXCollections.observableArrayList(filteredItems);
     }
 
-    public void addItem(String name, String serialNumber, String value){
-        String newValue = formatCurrency(value);
-
-        Item newItem = new Item(newValue, serialNumber, name);
-
-        //add serial number to hashset
-        serialNumSet.add(serialNumber);
-
-        //add item to list
-        allItems.add(newItem);
-    }
-
     public void loadPreviousSet(ObservableList<Item> itemObservableList){
         serialNumSet.clear();
 
@@ -71,76 +62,70 @@ public class InventoryFunctions {
     }
 
     public List<Item> sortNameAscending(ArrayList<Item> allItems){
-        //sort list
         List<Item> sortList = new ArrayList<>(allItems);
-        sortList.sort(Comparator.comparing(Item::getName));
 
-        //add list to filtered item list
+        sortList.sort(Comparator.comparing(Item::getName));
         filteredItems.clear();
         filteredItems.addAll(sortList);
 
         return sortList;
     }
     public List<Item> sortNameDescending(ArrayList<Item> allItems){
-        //sort list
         List<Item> sortList = new ArrayList<>(allItems);
-        sortList.sort(Comparator.comparing(Item::getName).reversed());
 
-        //add list to filtered item list
+        sortList.sort(Comparator.comparing(Item::getName).reversed());
         filteredItems.clear();
         filteredItems.addAll(sortList);
 
         return sortList;
     }
     public List<Item> sortValueAscending(ArrayList<Item> allItems){
-        //sort list
         List<Item> sortList = new ArrayList<>(allItems);
-        sortList.sort(Comparator.comparing(Item::getValueAmount));
 
-        //add list to filtered item list
+        sortList.sort(Comparator.comparing(Item::getValueAmount));
         filteredItems.clear();
         filteredItems.addAll(sortList);
 
         return sortList;
     }
     public List<Item> sortValueDescending(ArrayList<Item> allItems){
-        //sort list
         List<Item> sortList = new ArrayList<>(allItems);
-        sortList.sort(Comparator.comparing(Item::getValueAmount).reversed());
 
-        //add list to filtered item list
+        sortList.sort(Comparator.comparing(Item::getValueAmount).reversed());
         filteredItems.clear();
         filteredItems.addAll(sortList);
 
         return sortList;
     }
     public List<Item> sortSerialNumberAscending(ArrayList<Item> allItems){
-        //sort list
         List<Item> sortList = new ArrayList<>(allItems);
-        sortList.sort(Comparator.comparing(Item::getSerialNumber));
 
-        //add list to filtered item list
+        sortList.sort(Comparator.comparing(Item::getSerialNumber));
         filteredItems.clear();
         filteredItems.addAll(sortList);
 
         return sortList;
     }
     public List<Item> sortSerialNumberDescending(ArrayList<Item> allItems){
-        //sort list
         List<Item> sortList = new ArrayList<>(allItems);
-        sortList.sort(Comparator.comparing(Item::getSerialNumber).reversed());
 
-        //add list to filtered item list
+        sortList.sort(Comparator.comparing(Item::getSerialNumber).reversed());
         filteredItems.clear();
         filteredItems.addAll(sortList);
 
         return sortList;
     }
 
+    public void addItem(String name, String serialNumber, String value){
+        String newValue = formatCurrency(value);
+        Item newItem = new Item(newValue, serialNumber, name);
+
+        serialNumSet.add(serialNumber);
+        allItems.add(newItem);
+    }
+
     public void deleteItem(Item selectedItem){
-        //remove serial number from serial number list
         serialNumSet.remove(selectedItem.getSerialNumber());
-        //remove item from list
         allItems.remove(selectedItem);
         filteredItems.remove(selectedItem);
     }
@@ -150,44 +135,38 @@ public class InventoryFunctions {
     }
 
     public void editValue(Item selectedItem, String newValue){
-        //format value as currency and set
         newValue = formatCurrency(newValue);
         selectedItem.setValue(newValue);
     }
 
     public void editSerialNumber(Item selectedItem, String newSerialNum, String oldSerialNum){
-        //replace serial number in set and item setter
         serialNumSet.remove(oldSerialNum);
         serialNumSet.add(newSerialNum);
         selectedItem.setSerialNumber(newSerialNum);
     }
 
     public void searchByName(String name){
-        //clear current filtered list
         filteredItems.clear();
         for(Item item: allItems){
             if(item.getName().toLowerCase().contains(name.toLowerCase())){
-                //if item found, add to filtered list
                 filteredItems.add(item);
             }
         }
     }
 
     public void searchBySerialNumber(String serialNum){
-        //clear current filtered list
         filteredItems.clear();
         for(Item item: allItems){
             if(item.getSerialNumber().toLowerCase().contains(serialNum.toLowerCase())){
-                //if item found, add to list
                 filteredItems.add(item);
             }
         }
     }
 
     private String formatCurrency(String value){
-        //format as money
         NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);
         BigDecimal expectedValue = new BigDecimal(value);
+
         return n.format(expectedValue);
     }
 
@@ -205,6 +184,7 @@ public class InventoryFunctions {
 
     public boolean validateValue(String inputValue){
         boolean isValid = true;
+
         try{
             NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);
             BigDecimal expectedValue = new BigDecimal(inputValue);

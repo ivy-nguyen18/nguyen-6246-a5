@@ -1,5 +1,5 @@
 /*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
  *  Copyright 2021 Ivy Nguyen
  */
 package ucf.assignments;
@@ -7,11 +7,14 @@ package ucf.assignments;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The FileFunctions class provides functions for saving and loading files in the correct format by
+ * calling the corresponding classes.
+ */
 public class FileFunctions {
     private ObservableList<Item> itemObservableList;
 

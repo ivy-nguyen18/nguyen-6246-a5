@@ -1,11 +1,10 @@
 /*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
  *  Copyright 2021 Ivy Nguyen
  */
 package ucf.assignments;
 
 import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,34 +15,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The JsonFiles class provides functions for saving and loading to and from json file.
+ */
 public class JsonFiles extends FileFunctions{
 
-    //read from JSON
     public List<Item> loadFromPrevious(File file){
         List<Item> itemList = new ArrayList<>();
+
         try{
-            //new GSON object
             Gson gson = new Gson();
 
-            //read file into a list of Item
             Reader reader = Files.newBufferedReader(Paths.get(String.valueOf(file)));
             itemList = Arrays.asList(gson.fromJson(reader, Item[].class));
-
             reader.close();
         }catch(IOException e){
             e.printStackTrace();
         }
-
         return itemList;
     }
 
-    //convert to JSON
     public void saveFile(ArrayList<Item> allItems, File selectedFile){
-        //new Gson object
         Gson gson = new Gson().newBuilder().setPrettyPrinting().create();
 
         try {
-            //write in list of allItems into file
             FileWriter writer = new FileWriter(selectedFile);
             gson.toJson(allItems, writer);
             writer.close();

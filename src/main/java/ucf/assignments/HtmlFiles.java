@@ -1,5 +1,5 @@
 /*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
  *  Copyright 2021 Ivy Nguyen
  */
 package ucf.assignments;
@@ -13,12 +13,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The HtmlFiles class provides functions for saving and loading to and from Html file.
+ */
+
 public class HtmlFiles {
-    //read from HTML
+
     public List<Item> loadFromPrevious(File file){
         List<Item> itemList = new ArrayList<>();
+
         try{
-            //read file into a list of Item
             Path path = Paths.get(String.valueOf(file));
             String content = Files.readString(path);
             itemList = trimToTableContent(content);
@@ -30,7 +34,6 @@ public class HtmlFiles {
     }
 
     private List<Item> trimToTableContent(String content){
-        //take out extra content in document to get table content
         content = content.strip();
         content = content.replaceAll("[\\n\\t\\r]", "");
         String temp = content.substring(content.indexOf("<tr>"), content.lastIndexOf("</table>"));
@@ -39,9 +42,7 @@ public class HtmlFiles {
         String tableHtml = temp.replace(headers, "");
         tableHtml = tableHtml.replaceAll("<tr>", "");
         tableHtml = tableHtml.replaceAll("<td>", "");
-        //separate each item by newline character
         tableHtml = tableHtml.replaceAll("</tr>", "\n");
-        //separate each variable in item by a space
         tableHtml = tableHtml.replaceAll("</td>", " ");
 
         tableHtml = tableHtml.trim();
@@ -50,68 +51,60 @@ public class HtmlFiles {
     }
 
     private List<Item> parseStringAsList(String tableContent){
-        //parse each item by newline
         String [] itemArray = tableContent.split("\n");
         List<Item> itemList = new ArrayList<>();
+
         for(String line: itemArray){
             line = line.trim();
-            //split by space
             String [] stringArray = line.split("\\s+");
             itemList.add(stringArrayAsItem(stringArray));
         }
-
         return itemList;
     }
 
-
     private Item stringArrayAsItem(String [] stringArray){
-        //instantiate Item with variables
         return new Item(stringArray[0], stringArray[1], stringArray[2]);
     }
 
-    //convert to HTML
     public void saveFile(ArrayList<Item> allItems, File selectedFile){
-
         try {
-            //write in list of allItems into file
             FileWriter writer = new FileWriter(selectedFile);
+
             writer.write(formatHTML(allItems));
             writer.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private String formatHTML(ArrayList<Item> allItems){
-        //format html file
 
+    private String formatHTML(ArrayList<Item> allItems){
         return ("<!DOCTYPE html>\n"+
-                            "<html>\n" +
-                            "<head>\n" +
-                            "<style>\n" +
-                            "table, th, td {\n " +
-                                "\tborder: 1px solid black;\n" +
-                                "\tborder-collapse: collapse;\n" +
-                            "}\n" +
-                            "</style>\n" +
-                            "</head>\n" +
-                            "<body>\n" +
-                            "<h2>Inventory Manager</h2>\n" +
-                            "<table style=\"width:100%\">\n" +
-                                "\t<tr>\n" +
-                                "\t\t<th>Value</th>\n" +
-                                "\t\t<th>Serial Number</th>\n" +
-                                "\t\t<th>Name</th>\n" +
-                                "\t</tr>\n" +
-                            formatHTMLTable(allItems) +
-                            "</table>\n" +
-                            "</body>\n"+
-                            "</html>");
+                "<html>\n" +
+                "<head>\n" +
+                "<style>\n" +
+                "table, th, td {\n " +
+                "\tborder: 1px solid black;\n" +
+                "\tborder-collapse: collapse;\n" +
+                "}\n" +
+                "</style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<h2>Inventory Manager</h2>\n" +
+                "<table style=\"width:100%\">\n" +
+                "\t<tr>\n" +
+                "\t\t<th>Value</th>\n" +
+                "\t\t<th>Serial Number</th>\n" +
+                "\t\t<th>Name</th>\n" +
+                "\t</tr>\n" +
+                formatHTMLTable(allItems) +
+                "</table>\n" +
+                "</body>\n"+
+                "</html>");
     }
 
     private String[] itemAsStringArray(Item item){
-        //set string array with item variables
         String [] stringArray =  new String[3];
+
         stringArray[0] = item.getValue();
         stringArray[1] = item.getSerialNumber();
         stringArray[2] = item.getName();
@@ -119,11 +112,11 @@ public class HtmlFiles {
     }
 
     private String formatHTMLTable(ArrayList<Item> allItems){
-
-        //piece together as one big string
         StringBuilder builder = new StringBuilder();
+
         for(Item item: allItems){
             String [] stringArray = itemAsStringArray(item);
+
             builder.append("\t<tr>\n");
             builder.append(String.format("\t\t<td>%s</td>\n", stringArray[0]));
             builder.append(String.format("\t\t<td>%s</td>\n", stringArray[1]));
