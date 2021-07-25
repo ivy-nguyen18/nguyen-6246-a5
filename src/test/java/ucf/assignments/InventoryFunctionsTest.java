@@ -10,7 +10,7 @@ class InventoryFunctionsTest {
 
 
     @Test
-    void item_able_to_have_value_represented_in_US_dollars (){
+    void item_able_to_have_value_represented_in_US_dollars_should_be_in_format (){
         //create inventory object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -22,7 +22,7 @@ class InventoryFunctionsTest {
     }
 
     @Test
-    void item_able_to_have_value_represented_in_US_dollars2 (){
+    void item_able_to_have_value_represented_in_US_dollars2_should_not_be_in_format (){
         //create inventory object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -34,7 +34,7 @@ class InventoryFunctionsTest {
     }
 
     @Test
-    void item_able_to_have_serial_number_represented_as_10X_with_letters_and_digits (){
+    void item_able_to_have_serial_number_represented_as_10X_with_letters_and_digits_should_be_in_format (){
         //create inventory object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -46,7 +46,7 @@ class InventoryFunctionsTest {
     }
 
     @Test
-    void item_able_to_have_serial_number_represented_as_10X_with_letters_and_digits2(){
+    void item_able_to_have_serial_number_represented_as_10X_with_letters_and_digits2_should_not_be_in_format(){
         //create inventory object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -58,11 +58,59 @@ class InventoryFunctionsTest {
     }
 
     @Test
-    void item_able_to_have_unique_serial_number(){
+    void item_able_to_have_unique_serial_number_should_not_be_unique(){
+        //create inventory object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //add items to hashset and list
+        inventoryFunctions.addItem("Theodore", "1234567890", "100.00");
+        inventoryFunctions.addItem("Alvin", "1234567891", "1200.00");
+        inventoryFunctions.addItem("Simon", "ABCDEFGHIJ", "110.00");
+
+        //check if there is a duplicate (should return true if there is)
+        boolean actual = inventoryFunctions.isDuplicate("1234567891");
+        boolean expected = true;
+
+        assertEquals(actual, expected);
     }
 
     @Test
-    void item_able_to_have_name_between_2_and_256_characters_inclusive(){
+    void item_able_to_have_unique_serial_number_should_be_unique(){
+        //create inventory object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //add items to hashset and list
+        inventoryFunctions.addItem("Theodore", "1234567890", "100.00");
+        inventoryFunctions.addItem("Alvin", "1234567891", "1200.00");
+        inventoryFunctions.addItem("Simon", "ABCDEFGHIJ", "110.00");
+
+        //check if there is a duplicate (should return true if there is)
+        boolean actual = inventoryFunctions.isDuplicate("1234567892");
+        boolean expected = false;
+
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    void item_able_to_have_name_between_2_and_256_characters_inclusive_should_not_be_in_format(){
+        //create inventory object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        boolean actual = inventoryFunctions.validateName("A");
+        boolean expected = false;
+
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    void item_able_to_have_name_between_2_and_256_characters_inclusive_should_be_in_format(){
+        //create inventory object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        boolean actual = inventoryFunctions.validateName("Alvin");
+        boolean expected = true;
+
+        assertEquals(actual, expected);
     }
 
     @Test

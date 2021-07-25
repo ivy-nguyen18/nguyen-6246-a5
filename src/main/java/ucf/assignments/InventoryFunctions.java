@@ -12,6 +12,7 @@ import java.util.Set;
 
 public class InventoryFunctions {
     private Set<String> serialNumSet = new HashSet<>();
+
     private ArrayList<Item> allItems = new ArrayList<>();
     private ArrayList<Item> filteredItems = new ArrayList<>();
 
@@ -21,6 +22,10 @@ public class InventoryFunctions {
 
     public void setItemObservableList(ObservableList<Item> observableList){
         this.allItems = new ArrayList<>(observableList);
+    }
+
+    public Set<String> getSerialNumSet() {
+        return serialNumSet;
     }
 
     public ArrayList<Item> getAllItems(){
