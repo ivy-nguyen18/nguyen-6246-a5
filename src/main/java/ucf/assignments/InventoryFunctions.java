@@ -24,9 +24,13 @@ public class InventoryFunctions {
         this.allItems = new ArrayList<>(observableList);
     }
 
-    public Set<String> getSerialNumSet() {
+    public Set<String> updateSerialNumSet() {
+        for(Item item: allItems){
+            serialNumSet.add(item.getSerialNumber());
+        }
         return serialNumSet;
     }
+
 
     public ArrayList<Item> getAllItems(){
         return allItems;

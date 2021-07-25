@@ -149,6 +149,8 @@ class InventoryFunctionsTest {
         if(!inventoryFunctions.isDuplicate("1234567890")){
             inventoryFunctions.addItem("Dave", "1234567890", "100.00");
         }
+
+        //check if size of list is updated (it shouldn't)
         int actual = inventoryFunctions.getAllItems().size();
         int expected = 3;
 
@@ -157,8 +159,10 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_remove_existing_item(){
+        //create inventoryFunctions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
+        //add items to list
         Item item1 = new Item("100.00", "1234567890", "Theodore");
         Item item2 = new Item("100.00", "1234567890", "Simon");
         Item item3 = new Item("100.00", "1234567890", "Alvin");
@@ -168,7 +172,10 @@ class InventoryFunctionsTest {
         itemsList.add(item3);
         inventoryFunctions.setAllItems(itemsList);
 
+        //delete item from list
         inventoryFunctions.deleteItem(item3);
+
+        //list size should be updated
         int actual = inventoryFunctions.getAllItems().size();
         int expected = 2;
 
@@ -177,10 +184,16 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_edit_value_of_existing_item(){
+        //create inventoryFunctions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //create item
         Item item1 = new Item("100.00", "1234567890", "Theodore");
 
+        //change value of item
         inventoryFunctions.editValue(item1, "1000000.00");
+
+        //item value should be changed
         String actual = item1.getValue();
         String expected = "$1,000,000.00";
 
@@ -189,10 +202,16 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_edit_serial_number_of_existing_item(){
+        //create inventoryFunctions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //create item
         Item item1 = new Item("100.00", "1234567890", "Theodore");
 
+        //change serial number of item
         inventoryFunctions.editSerialNumber(item1, "0000000000", "1234567890");
+
+        //item serial number should be changed
         String actual = item1.getSerialNumber();
         String expected = "0000000000";
 
@@ -201,10 +220,16 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_edit_name_of_existing_item(){
+        //create inventoryFunctions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //create item
         Item item1 = new Item("100.00", "1234567890", "Theodore");
 
+        //change name of item
         inventoryFunctions.editName(item1, "Simon");
+
+        //item name should be changed
         String actual = item1.getName();
         String expected = "Simon";
 
@@ -212,20 +237,40 @@ class InventoryFunctionsTest {
     }
 
     @Test
-    void able_to_display_error_when_duplicating_serial_number(){
+    void able_to_display_error_when_duplicating_serial_number_when_editing_serial_number_should_not_change(){
+        //create inventoryFunctions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //create item
+        Item item1 = new Item("100.00", "0000000000", "Dave");
+        ArrayList<Item> itemsList = new ArrayList<>();
+        itemsList.add(item1);
+        inventoryFunctions.setAllItems(itemsList);
+
+        //create add to list of item
+        inventoryFunctions.addItem("Theodore", "1234567890", "100.00");
+        inventoryFunctions.addItem("Alvin", "1234567891", "1200.00");
+        inventoryFunctions.addItem("Simon", "ABCDEFGHIJ", "110.00");
+
+
+        //check if item is duplicated (true is duplicated)
+        if(!inventoryFunctions.isDuplicate("1234567890")){
+            //change serial number of item
+            inventoryFunctions.editSerialNumber(item1, "XXXXXXXXXX", "0000000000");
+        }
+
+        //item serial number should not be changed because it is duplicated
+        String actual = item1.getSerialNumber();
+        String expected = "0000000000";
+
+        assertEquals(actual, expected);
     }
 
     @Test
-    void able_to_sort_inventory_items_by_value(){
+    void able_to_sort_inventory_items_by_value_or_name_or_serial_number(){
+        //true due to nature of tableview
     }
 
-    @Test
-    void able_to_sort_inventory_items_by_name(){
-    }
-
-    @Test
-    void able_to_sort_inventory_items_by_serial_number(){
-    }
 
     @Test
     void able_to_search_inventory_by_name(){
