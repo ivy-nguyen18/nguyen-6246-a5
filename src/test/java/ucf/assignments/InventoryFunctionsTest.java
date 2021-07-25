@@ -8,16 +8,34 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InventoryFunctionsTest {
 
-    @Test
-    void able_to_interact_with_GUI (){
-    }
 
     @Test
     void item_able_to_have_value_represented_in_US_dollars (){
+        //create inventory object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //check if value given can be converted to US dollars
+        boolean actual = inventoryFunctions.validateValue("1000");
+        boolean expected = true;
+
+        assertEquals(actual,expected);
+    }
+
+    @Test
+    void item_able_to_have_value_represented_in_US_dollars2 (){
+        //create inventory object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //check if value given can be converted to US dollars
+        boolean actual = inventoryFunctions.validateValue("aaaaa");
+        boolean expected = false;
+
+        assertEquals(actual,expected);
     }
 
     @Test
     void item_able_to_have_serial_number_represented_as_10X_with_letters_and_digits (){
+
     }
 
     @Test
