@@ -7,14 +7,14 @@ class Inventory{
 }
 
 class FileFunctions{
-    - itemObservableList = ObservableList<Item>
-    + readFileFormatted(String,File)
+    - itemObservableList: ObservableList<Item>
+    + readFileFormatted(String, File)
     + openFile(): File
     + saveAs(): File
-    + storeFileFormatted(String, File)
+    + storeFileFormatted(String, File, ArrayList<Item>)
     + getItemObservableList(): ObservableList<Item>
     + setItemObservableList(ObservableList<Item>)
-    - observableListToArrayList(ObservableList<Item>): ArrayList<Item>
+    + observableListToArrayList(ObservableList<Item>): ArrayList<Item>
 }
 
 class JsonFiles{
@@ -98,12 +98,13 @@ class InventoryFunctions{
     + getFilteredItems(): ObservableList<Item>
 
     + addItem(String, String, String)
+    + loadPreviousSet(ObservableList<Item>)
     + deleteItem(Item)
     + editName(Item, String)
     + editValue(Item, String)
     + editSerialNumber(Item, String, String)
     + searchByName(String)
-    + searchByValue(String)
+    + searchBySerialNumber(String)
     - formatCurrency(String): String
     + validateName(String): boolean
     + validateSerialNumberFormat(String): boolean

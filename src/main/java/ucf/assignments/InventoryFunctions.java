@@ -12,7 +12,6 @@ import java.util.Set;
 
 public class InventoryFunctions {
     private Set<String> serialNumSet = new HashSet<>();
-
     private ArrayList<Item> allItems = new ArrayList<>();
     private ArrayList<Item> filteredItems = new ArrayList<>();
 
@@ -58,6 +57,7 @@ public class InventoryFunctions {
             serialNumSet.add(item.getSerialNumber());
         }
     }
+
     public void deleteItem(Item selectedItem){
         //remove serial number from serial number list
         serialNumSet.remove(selectedItem.getSerialNumber());

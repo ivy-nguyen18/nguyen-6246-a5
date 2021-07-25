@@ -3,8 +3,6 @@ package ucf.assignments;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.text.html.HTML;
-import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
