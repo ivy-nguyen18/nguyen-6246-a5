@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,6 +14,7 @@ class InventoryFunctionsTest {
     @Test
     @DisplayName("Sort Name Ascending")
     void able_to_inventory_by_name1(){
+        //table view already has built in sort, this tests sorting filtered list function
         //create inventory functions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -45,6 +45,7 @@ class InventoryFunctionsTest {
     @Test
     @DisplayName("Sort Name descending")
     void able_to_inventory_by_name2(){
+        //table view already has built in sort, this tests sorting filtered list function
         //create inventory functions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -75,6 +76,7 @@ class InventoryFunctionsTest {
     @Test
     @DisplayName("Sort Value Ascending")
     void able_to_inventory_by_value1(){
+        //table view already has built in sort, this tests sorting filtered list function
         //create inventory functions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -109,6 +111,7 @@ class InventoryFunctionsTest {
     @Test
     @DisplayName("Sort Value Descending")
     void able_to_inventory_by_value2(){
+        //table view already has built in sort, this tests sorting filtered list function
         //create inventory functions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -143,6 +146,7 @@ class InventoryFunctionsTest {
     @Test
     @DisplayName("Sort Serial Number Ascending")
     void able_to_inventory_by_serial_number1(){
+        //table view already has built in sort, this tests sorting functions
         //create inventory functions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
@@ -173,6 +177,7 @@ class InventoryFunctionsTest {
     @Test
     @DisplayName("Sort Serial Number descending")
     void able_to_inventory_by_serial_number2(){
+        //table view already has built in sort, this tests sorting functions
         //create inventory functions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 

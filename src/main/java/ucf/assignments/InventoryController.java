@@ -1,3 +1,7 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  Copyright 2021 Ivy Nguyen
+ */
 package ucf.assignments;
 
 import javafx.collections.FXCollections;
@@ -28,9 +32,6 @@ public class InventoryController {
     //fx id for search menu
     @FXML private ComboBox<String> searchByComboBox;
     @FXML private TextField searchByTextField;
-
-    //fx id for sorting
-    @FXML private ComboBox<String> sortComboBox;
 
     //fx id for error labels
     @FXML private Label nameErrorLabel;
@@ -155,44 +156,6 @@ public class InventoryController {
         }
     }
 
-    @FXML
-    public void sortComboBoxClicked(ActionEvent actionEvent){
-        String choice = sortComboBox.getValue();
-        System.out.println(choice);
-        ArrayList<Item> observableArray = inventoryFunctions.observableListToArrayList(inventoryFunctions.getFilteredItems());
-
-        switch(choice){
-            case "Value: Low - High" ->{
-                inventoryFunctions.sortValueAscending(observableArray);
-                itemTableView.setItems(inventoryFunctions.getFilteredItems());
-            }
-            case "Value: High - Low" ->{
-                inventoryFunctions.sortValueDescending(observableArray);
-                itemTableView.setItems(inventoryFunctions.getFilteredItems());
-            }
-            case "Name: A - Z" -> {
-                inventoryFunctions.sortNameAscending(observableArray);
-                itemTableView.setItems(inventoryFunctions.getFilteredItems());
-            }
-            case "Name: Z - A" -> {
-                inventoryFunctions.sortNameDescending(observableArray);
-                itemTableView.setItems(inventoryFunctions.getFilteredItems());
-            }
-            case "Serial Number: A - Z" -> {
-                inventoryFunctions.sortSerialNumberAscending(observableArray);
-                itemTableView.setItems(inventoryFunctions.getFilteredItems());
-            }
-            case "Serial Number: Z - A" -> {
-                inventoryFunctions.sortSerialNumberDescending(observableArray);
-                itemTableView.setItems(inventoryFunctions.getFilteredItems());
-            }
-            default -> {
-                updateTableView(itemTableView.getItems());
-            }
-        }
-
-    }
-
     public void sortValues(){
         Comparator<String> columnComparator =
                 (String v1, String v2) -> {
@@ -222,9 +185,12 @@ public class InventoryController {
 
         //reset search field
         searchByComboBox.getSelectionModel().clearSelection();
-        searchByComboBox.setValue("Search by...");
+        searchByComboBox.setValue(null);
         searchByTextField.clear();
         searchByTextField.setEditable(false);
+
+        //reset filtered list
+        inventoryFunctions.setFilteredItems(inventoryFunctions.observableListToArrayList(itemObservableList));
     }
 
     public void initialize(){
@@ -233,8 +199,6 @@ public class InventoryController {
         inventoryFunctions.setItemObservableList(itemObservableList);
         inventoryFunctions.setSerialNumSet(serialNumSet);
         inventoryFunctions.setFilteredItems(inventoryFunctions.observableListToArrayList(itemObservableList));
-        //initialize sort field
-        initializeSortField();
         //initialize search field
         initializeSearchFields();
         //initialize the labels
@@ -353,14 +317,6 @@ public class InventoryController {
         searchByTextField.setEditable(false);
     }
 
-    private void initializeSortField(){
-        sortComboBox.getItems().add("Value: Low - High");
-        sortComboBox.getItems().add("Value: High - Low");
-        sortComboBox.getItems().add("Name: A - Z");
-        sortComboBox.getItems().add("Name: Z - A");
-        sortComboBox.getItems().add("Serial Number: A - Z");
-        sortComboBox.getItems().add("Serial Number: Z - A");
-    }
 
     private void initializeComboBox() {
         searchByComboBox.setPromptText("Search by...");

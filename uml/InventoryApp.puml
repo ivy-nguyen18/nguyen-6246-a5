@@ -69,6 +69,7 @@ class InventoryController{
     + addItemButtonClicked(ActionEvent)
     + comboBoxClicked(ActionEvent)
     + searchButtonClicked(ActionEvent)
+    + sortValues()
     + deleteButtonClicked(ActionEvent)
     + initialize()
     + refreshButtonClicked(ActionEvent)
@@ -92,13 +93,21 @@ class InventoryFunctions{
 
     + setSerialNumSet(Set<String>)
     + setItemObservableList(ObservableList<Item>)
+    + setFilteredItems(ArrayList<Item>)
     + getAllItems(): ArrayList<Item>
     + setAllItems(ArrayList<Item>)
+    + observableListToArrayList(ObservableList<Item>): ArrayList<Item>
     + getAllItemsObservable(): ObservableList<Item>
     + getFilteredItems(): ObservableList<Item>
 
     + addItem(String, String, String)
     + loadPreviousSet(ObservableList<Item>)
+    + sortNameAscending(ArrayList<Item>): List<Item>
+    + sortNameDescending(ArrayList<Item>): List<Item>
+    + sortValueAscending(ArrayList<Item>): List<Item>
+    + sortValueDescending(ArrayList<Item>): List<Item>
+    + sortSerialNumberAscending(ArrayList<Item>): List<Item>
+    + sortSerialNumberDescending(ArrayList<Item>): List<Item>
     + deleteItem(Item)
     + editName(Item, String)
     + editValue(Item, String)
@@ -120,6 +129,7 @@ class Item{
     + Item(String, String, String)
     + getValue(): String
     + setValue(String value)
+    + getValueAmount(): double
     + getSerialNumber(): String
     + setSerialNumber(String)
     + getName(): String

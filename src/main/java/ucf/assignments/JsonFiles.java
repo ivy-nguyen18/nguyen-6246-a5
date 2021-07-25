@@ -1,7 +1,10 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  Copyright 2021 Ivy Nguyen
+ */
 package ucf.assignments;
 
 import com.google.gson.Gson;
-import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.io.FileWriter;

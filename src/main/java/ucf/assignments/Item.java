@@ -1,6 +1,8 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  Copyright 2021 Ivy Nguyen
+ */
 package ucf.assignments;
-
-import java.math.BigDecimal;
 
 public class Item {
     private String value;
