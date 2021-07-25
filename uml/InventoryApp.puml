@@ -25,6 +25,7 @@ class JsonFiles{
 class TsvFiles{
     + loadFromPrevious(File): List<Item>
     + saveFile(ArrayList<Item>, File)
+    - createHeader(StringBuilder): StringBuilder
     - parseStringList(List<String)): List<Item>
     - stringArrayAsItem(String []): Item
     - itemAsStringArray(Item): String[]

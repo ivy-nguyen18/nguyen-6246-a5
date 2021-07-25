@@ -4,9 +4,8 @@
  */
 package ucf.assignments;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,11 +15,18 @@ import java.util.List;
 public class TsvFiles extends FileFunctions{
     //read from TSV
     public List<Item> loadFromPrevious(File file){
-        List<String> lines = Collections.emptyList();
+        List<String> lines = new ArrayList<>(Collections.emptyList());
         try{
 
             //read file into a list of Item
-            lines = Files.readAllLines(Paths.get(file.toString()));
+            BufferedReader br = new BufferedReader(new FileReader(file.toString()));
+            //skip headers
+            br.readLine();
+            br.readLine();
+            String line = null;
+            while((line = br.readLine() )!= null){
+                lines.add(line);
+            }
 
         }catch(IOException e){
             e.printStackTrace();
@@ -55,14 +61,22 @@ public class TsvFiles extends FileFunctions{
     }
 
     private String concatenateAllItemStrings(ArrayList<Item> allItems){
-
         //piece together as one big string
         StringBuilder builder = new StringBuilder();
+        builder = createHeader(builder);
         for(Item item: allItems){
             String [] stringArray = itemAsStringArray(item);
             builder.append((String.format("%s\t%s\t%s\n", stringArray[0], stringArray[1], stringArray[2])));
         }
         return builder.toString();
+    }
+
+    private StringBuilder createHeader(StringBuilder builder){
+        String header = "Value\tSerial Number\tName\n";
+        String dash = "-";
+        builder.append(header);
+        builder.append(dash.repeat(header.length()+10) + "\n");
+        return builder;
     }
 
     //write to TSV
