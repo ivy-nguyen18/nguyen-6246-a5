@@ -6,13 +6,42 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InventoryFunctionsTest {
-    //test for creating GUI not testable
-    //tests for sort by name, serial number, and value are not testable because it is a built in function of tableview
+    @Test
+    @DisplayName("Sort Name Ascending")
+    void able_to_inventory_by_value(){
+        //create inventory functions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //add items to list
+        Item item1 = new Item("200.00", "1234567890", "Theodore");
+        Item item2 = new Item("10.00", "1234567890", "Simon");
+        Item item3 = new Item("100.00", "1234567890", "Alvin");
+        ArrayList<Item> itemsList = new ArrayList<>();
+        itemsList.add(item1);
+        itemsList.add(item2);
+        itemsList.add(item3);
+        inventoryFunctions.setAllItems(itemsList);
+
+        //sort the list
+        List<Item> sortedList = inventoryFunctions.sortNameAscending(itemsList);
+        StringBuilder sortedNames = new StringBuilder();
+        for(Item item: sortedList){
+            sortedNames.append(item.getName());
+        }
+
+        //check if list is sorted by name
+        String actual = sortedNames.toString();
+        String expected = "AlvinSimonTheodore";
+
+        assertEquals(actual, expected);
+    }
+
 
     @Test
     @DisplayName("List holds atleast 100 items")

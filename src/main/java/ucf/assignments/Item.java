@@ -21,6 +21,10 @@ public class Item {
         this.value = value;
     }
 
+    public double getValueAmount(){
+        String dollars = value.substring(1);
+        return Double.parseDouble(dollars);
+    }
     public String getSerialNumber() {
         return serialNumber;
     }

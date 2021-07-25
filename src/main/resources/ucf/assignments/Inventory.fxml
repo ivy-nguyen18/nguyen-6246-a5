@@ -86,7 +86,7 @@
                               <Button mnemonicParsing="false" onAction="#searchButtonClicked" text="Search" />
                            </children>
                         </HBox>
-                        <TableView fx:id="itemTableView" layoutX="63.0" layoutY="66.0" prefHeight="563.0" prefWidth="521.0">
+                        <TableView fx:id="itemTableView" layoutX="63.0" layoutY="83.0" prefHeight="546.0" prefWidth="521.0">
                           <columns>
                             <TableColumn fx:id="valueColumn" onEditCommit="#editValue" prefWidth="75.0" text="Value" />
                             <TableColumn fx:id="serialNumberColumn" onEditCommit="#editSerialNumber" prefWidth="139.0" text="Serial Number" />
@@ -95,6 +95,8 @@
                         </TableView>
                         <Button layoutX="284.0" layoutY="632.0" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete Item" />
                         <Button layoutX="528.0" layoutY="632.0" mnemonicParsing="false" onAction="#refreshButtonClicked" text="Refresh" />
+                        <ComboBox fx:id="sortComboBox" layoutX="432.0" layoutY="57.0" onAction="#sortComboBoxClicked" prefWidth="150.0" />
+                        <Text layoutX="382.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort By:" />
                      </children>
                   </AnchorPane>
               </items>

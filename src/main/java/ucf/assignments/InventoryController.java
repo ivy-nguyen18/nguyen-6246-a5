@@ -10,9 +10,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class InventoryController {
 
@@ -30,6 +28,9 @@ public class InventoryController {
     //fx id for search menu
     @FXML private ComboBox<String> searchByComboBox;
     @FXML private TextField searchByTextField;
+
+    //fx id for sorting
+    @FXML private ComboBox<String> sortComboBox;
 
     //fx id for error labels
     @FXML private Label nameErrorLabel;
@@ -105,6 +106,7 @@ public class InventoryController {
             updateTableView(file.getItemObservableList());
 
             inventoryFunctions.loadPreviousSet(itemObservableList);
+            inventoryFunctions.setFilteredItems(inventoryFunctions.observableListToArrayList(itemObservableList));
         }
     }
 
@@ -118,7 +120,7 @@ public class InventoryController {
         //validate inputs
         if(validateInputs(name, serialNumber, value)){
             initializeLabels();
-            inventoryFunctions.addItem(name, serialNumber, value);
+            inventoryFunctions.addItem(name, serialNumber.toUpperCase(), value);
             updateTableView(inventoryFunctions.getAllItemsObservable());
         }
     }
@@ -153,6 +155,57 @@ public class InventoryController {
         }
     }
 
+    @FXML
+    public void sortComboBoxClicked(ActionEvent actionEvent){
+        String choice = sortComboBox.getValue();
+        System.out.println(choice);
+        ArrayList<Item> observableArray = inventoryFunctions.observableListToArrayList(inventoryFunctions.getFilteredItems());
+
+        switch(choice){
+            case "Value: Low - High" ->{
+                inventoryFunctions.sortValueAscending(observableArray);
+                itemTableView.setItems(inventoryFunctions.getFilteredItems());
+            }
+            case "Value: High - Low" ->{
+                inventoryFunctions.sortValueDescending(observableArray);
+                itemTableView.setItems(inventoryFunctions.getFilteredItems());
+            }
+            case "Name: A - Z" -> {
+                inventoryFunctions.sortNameAscending(observableArray);
+                itemTableView.setItems(inventoryFunctions.getFilteredItems());
+            }
+            case "Name: Z - A" -> {
+                inventoryFunctions.sortNameDescending(observableArray);
+                itemTableView.setItems(inventoryFunctions.getFilteredItems());
+            }
+            case "Serial Number: A - Z" -> {
+                inventoryFunctions.sortSerialNumberAscending(observableArray);
+                itemTableView.setItems(inventoryFunctions.getFilteredItems());
+            }
+            case "Serial Number: Z - A" -> {
+                inventoryFunctions.sortSerialNumberDescending(observableArray);
+                itemTableView.setItems(inventoryFunctions.getFilteredItems());
+            }
+            default -> {
+                updateTableView(itemTableView.getItems());
+            }
+        }
+
+    }
+
+    public void sortValues(){
+        Comparator<String> columnComparator =
+                (String v1, String v2) -> {
+                    String dollars = v1.substring(1);
+                    double amount1 = Double.parseDouble(dollars);
+                    String dollars2 = v2.substring(1);
+                    double amount2 = Double.parseDouble(dollars2);
+                    return Double.compare(amount1,amount2);
+
+                };
+
+        valueColumn.setComparator(columnComparator);
+    }
 
     @FXML
     public void deleteButtonClicked(ActionEvent actionEvent) {
@@ -176,15 +229,19 @@ public class InventoryController {
 
     public void initialize(){
         //make InventoryFunctions object
-        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+        //InventoryFunctions inventoryFunctions = new InventoryFunctions();
         inventoryFunctions.setItemObservableList(itemObservableList);
         inventoryFunctions.setSerialNumSet(serialNumSet);
+        inventoryFunctions.setFilteredItems(inventoryFunctions.observableListToArrayList(itemObservableList));
+        //initialize sort field
+        initializeSortField();
         //initialize search field
         initializeSearchFields();
         //initialize the labels
         initializeLabels();
         //set up the table
         initializeTable();
+        sortValues();
     }
 
 
@@ -243,9 +300,11 @@ public class InventoryController {
 
     @FXML
     public void editValue(TableColumn.CellEditEvent edittedCell){
+
         //get new changes
         Item itemSelected = itemTableView.getSelectionModel().getSelectedItem();
         String newValue = edittedCell.getNewValue().toString();
+
 
         //if value is in correct format, update list
         if(inventoryFunctions.validateValue(newValue)){
@@ -294,6 +353,15 @@ public class InventoryController {
         searchByTextField.setEditable(false);
     }
 
+    private void initializeSortField(){
+        sortComboBox.getItems().add("Value: Low - High");
+        sortComboBox.getItems().add("Value: High - Low");
+        sortComboBox.getItems().add("Name: A - Z");
+        sortComboBox.getItems().add("Name: Z - A");
+        sortComboBox.getItems().add("Serial Number: A - Z");
+        sortComboBox.getItems().add("Serial Number: Z - A");
+    }
+
     private void initializeComboBox() {
         searchByComboBox.setPromptText("Search by...");
         searchByComboBox.getItems().add("Name");
@@ -326,7 +394,7 @@ public class InventoryController {
         }
         //is serial number a duplicate (true is duplicate, false is unique)
         if(inventoryFunctions.isDuplicate(serialNumber)){
-            showErrorPopUp("duplicateError");
+            serialNumberErrorLabel.setText("Serial number is a duplicate");
             isValid = false;
         }
         return isValid;

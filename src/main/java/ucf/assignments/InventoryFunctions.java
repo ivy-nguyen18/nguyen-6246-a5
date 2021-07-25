@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 public class InventoryFunctions {
     private Set<String> serialNumSet = new HashSet<>();
@@ -21,6 +18,14 @@ public class InventoryFunctions {
 
     public void setItemObservableList(ObservableList<Item> observableList){
         this.allItems = new ArrayList<>(observableList);
+    }
+
+    public void setFilteredItems(ArrayList<Item> filteredItemsArray){
+        this.filteredItems = filteredItemsArray;
+    }
+
+    public ArrayList<Item> observableListToArrayList(ObservableList<Item> observableList){
+        return new ArrayList<>(observableList);
     }
 
     public ArrayList<Item> getAllItems(){
@@ -58,11 +63,67 @@ public class InventoryFunctions {
         }
     }
 
+    public List<Item> sortNameAscending(ArrayList<Item> allItems){
+        List<Item> sortList = new ArrayList<>(allItems);
+        sortList.sort(Comparator.comparing(Item::getName));
+
+        filteredItems.clear();
+        filteredItems.addAll(sortList);
+
+        return sortList;
+    }
+    public List<Item> sortNameDescending(ArrayList<Item> allItems){
+        List<Item> sortList = new ArrayList<>(allItems);
+        sortList.sort(Comparator.comparing(Item::getName).reversed());
+
+        filteredItems.clear();
+        filteredItems.addAll(sortList);
+
+        return sortList;
+    }
+    public List<Item> sortValueAscending(ArrayList<Item> allItems){
+        List<Item> sortList = new ArrayList<>(allItems);
+        sortList.sort(Comparator.comparing(Item::getValueAmount));
+
+        filteredItems.clear();
+        filteredItems.addAll(sortList);
+
+        return sortList;
+    }
+    public List<Item> sortValueDescending(ArrayList<Item> allItems){
+        List<Item> sortList = new ArrayList<>(allItems);
+        sortList.sort(Comparator.comparing(Item::getValueAmount).reversed());
+
+        filteredItems.clear();
+        filteredItems.addAll(sortList);
+
+        return sortList;
+    }
+    public List<Item> sortSerialNumberAscending(ArrayList<Item> allItems){
+        List<Item> sortList = new ArrayList<>(allItems);
+        sortList.sort(Comparator.comparing(Item::getSerialNumber));
+
+        filteredItems.clear();
+        filteredItems.addAll(sortList);
+
+        return sortList;
+    }
+    public List<Item> sortSerialNumberDescending(ArrayList<Item> allItems){
+        List<Item> sortList = new ArrayList<>(allItems);
+        sortList.sort(Comparator.comparing(Item::getSerialNumber).reversed());
+
+        filteredItems.clear();
+        filteredItems.addAll(sortList);
+
+        return sortList;
+    }
+
     public void deleteItem(Item selectedItem){
         //remove serial number from serial number list
         serialNumSet.remove(selectedItem.getSerialNumber());
         //remove item from list
         allItems.remove(selectedItem);
+        filteredItems.remove(selectedItem);
     }
 
     public void editName(Item selectedItem, String newName){
