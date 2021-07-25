@@ -587,4 +587,64 @@ class InventoryFunctionsTest {
 
         assertEquals(actual,expected);
     }
+
+    @Test
+    @DisplayName("User chooses to save as JSON")
+    void able_to_choose_JSON_format() throws IOException {
+        //create fileFunctions object
+        FileFunctions fileFunctions = new FileFunctions();
+
+        ArrayList<Item> itemsList = new ArrayList<>();
+
+        //create temp file in project directory
+        File file = File.createTempFile("TEST", ".json", null);
+        fileFunctions.storeFileFormatted(".json", file, itemsList);
+
+        //check if file exists
+        boolean actual = file.exists();
+        file.deleteOnExit();
+        boolean expected = true;
+
+        assertEquals(actual,expected);
+    }
+
+    @Test
+    @DisplayName("User chooses to save as HTML")
+    void able_to_choose_HTML_format() throws IOException {
+        //create fileFunctions object
+        FileFunctions fileFunctions = new FileFunctions();
+
+        ArrayList<Item> itemsList = new ArrayList<>();
+
+        //create temp file in project directory
+        File file = File.createTempFile("TEST", ".html", null);
+        fileFunctions.storeFileFormatted(".html", file, itemsList);
+
+        //check if file exists
+        boolean actual = file.exists();
+        file.deleteOnExit();
+        boolean expected = true;
+
+        assertEquals(actual,expected);
+    }
+
+    @Test
+    @DisplayName("User chooses to save as TSV")
+    void able_to_choose_TSV_format() throws IOException {
+        //create fileFunctions object
+        FileFunctions fileFunctions = new FileFunctions();
+
+        ArrayList<Item> itemsList = new ArrayList<>();
+
+        //create temp file in project directory
+        File file = File.createTempFile("TEST", ".txt", null);
+        fileFunctions.storeFileFormatted(".txt", file, itemsList);
+
+        //check if file exists
+        boolean actual = file.exists();
+        file.deleteOnExit();
+        boolean expected = true;
+
+        assertEquals(actual,expected);
+    }
 }

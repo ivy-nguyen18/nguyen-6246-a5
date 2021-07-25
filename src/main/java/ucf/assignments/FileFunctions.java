@@ -19,14 +19,14 @@ public class FileFunctions {
         return itemObservableList ;
     }
 
-    private ArrayList<Item> observableListToArrayList(ObservableList<Item> observableList){
+    public ArrayList<Item> observableListToArrayList(ObservableList<Item> observableList){
         //copy elements in ObservableList to ArrayList
         return new ArrayList<>(observableList);
     }
 
-    public void storeFileFormatted(String fileType, File selectedFile){
+    public void storeFileFormatted(String fileType, File selectedFile, ArrayList <Item> itemList ){
         //call corresponding functions for file type
-        ArrayList <Item> itemList = observableListToArrayList(itemObservableList);
+
         switch(fileType){
             case ".json" -> {
                 //save file as json

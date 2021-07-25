@@ -10,6 +10,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,7 +58,8 @@ public class InventoryController {
         String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
 
         //call saveFile
-        file.storeFileFormatted(fileType, selectedFile);
+        ArrayList<Item> itemList = file.observableListToArrayList(itemObservableList);
+        file.storeFileFormatted(fileType, selectedFile, itemList);
     }
 
     @FXML
@@ -76,7 +78,8 @@ public class InventoryController {
             String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
 
             //save the file
-            file.storeFileFormatted(fileType, selectedFile);
+            ArrayList<Item> itemList = file.observableListToArrayList(itemObservableList);
+            file.storeFileFormatted(fileType, selectedFile, itemList);
         }
 
     }
