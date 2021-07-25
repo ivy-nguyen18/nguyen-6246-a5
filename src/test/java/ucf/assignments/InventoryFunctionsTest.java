@@ -96,6 +96,7 @@ class InventoryFunctionsTest {
         //create inventory object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
+        //check if name is in right format
         boolean actual = inventoryFunctions.validateName("A");
         boolean expected = false;
 
@@ -107,6 +108,7 @@ class InventoryFunctionsTest {
         //create inventory object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
+        //check if name is in right format
         boolean actual = inventoryFunctions.validateName("Alvin");
         boolean expected = true;
 
@@ -115,24 +117,42 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_add_new_item(){
+        //create inventoryFunctions object
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
-        Item item1 = new Item("100.00", "1234567890", "Theodore");
-        Item item2 = new Item("100.00", "1234567890", "Simon");
-        ArrayList<Item> itemsList = new ArrayList<>();
-        itemsList.add(item1);
-        itemsList.add(item2);
-        inventoryFunctions.setAllItems(itemsList);
+        //add items to hashset and list
+        inventoryFunctions.addItem("Theodore", "1234567890", "100.00");
+        inventoryFunctions.addItem("Alvin", "1234567891", "1200.00");
+        inventoryFunctions.addItem("Simon", "ABCDEFGHIJ", "110.00");
 
-        inventoryFunctions.addItem("Alvin", "1234567890", "100.00");
+        //add an item
+        inventoryFunctions.addItem("Alvin", "1234567893", "100.00");
+
+        //check if item is added
         int actual = inventoryFunctions.getAllItems().size();
-        int expected = 3;
+        int expected = 4;
 
         assertEquals(actual, expected);
     }
 
     @Test
-    void able_to_show_error_for_duplicate_serial_numbers(){
+    void able_to_show_error_for_duplicate_serial_numbers_when_adding_should_not_add(){
+        //create inventoryFunctions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //add items to hashset and list
+        inventoryFunctions.addItem("Theodore", "1234567890", "100.00");
+        inventoryFunctions.addItem("Alvin", "1234567891", "1200.00");
+        inventoryFunctions.addItem("Simon", "ABCDEFGHIJ", "110.00");
+
+        //check if item is duplicated (true is duplicated)
+        if(!inventoryFunctions.isDuplicate("1234567890")){
+            inventoryFunctions.addItem("Dave", "1234567890", "100.00");
+        }
+        int actual = inventoryFunctions.getAllItems().size();
+        int expected = 3;
+
+        assertEquals(actual, expected);
     }
 
     @Test
