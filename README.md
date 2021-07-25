@@ -3,18 +3,24 @@
 
 ## To use this application (Please read carefully before progressing):
 
-* _Add an item:_ In the "Add New Item" section of the window, enter ALL item details and click "Add Item". 
+* _Add an item:_ In the "Add New Item" section of the window, enter ALL item details and click "Add Item".
+
     Requirements are as followed:
-      * item shall have a value representing its monetary value in US dollars
-      * item shall have a unique serial number in the format of XXXXXXXXXX where X can be either a letter or digit
-      * item shall have a name between 2 and 256 characters in length (inclusive)
-    Otherwise, error labels will appear, corresponding to input, and item will not be added. Duplicate serial numbers will cause a popup alert.
+    * item shall have a value representing its monetary value in US dollars
+    * item shall have a unique serial number in the format of XXXXXXXXXX where X can be either a letter or digit
+    * item shall have a name between 2 and 256 characters in length (inclusive)
+   
+   Otherwise, error labels will appear, corresponding to input, and item will not be added. 
+   
+    **Note**: Adding an item will cause list to resort to default view with all items visible.
 
 * _Sort list by value, serial number, or name:_ Click on table headers to sort the list.
 
 * _Remove an item:_ At the bottom, there is a "Delete" button, select the item by clicking once and click the "Delete" button.
+    
+    **Note**: Deleting an item will cause list to resort to default view with all items visible.
 
-* _Edit value of Item:_ In the table, click on item, double click the item's value cell and press Enter to submit the changes. If value is not a monetary value, a corresponding error Alert will popup and the changes will not be committed. Table automatically updates. 
+* _Edit value of Item:_ In the table, click on item, double click the item's value cell and press Enter to submit the changes. Enter a number only. If the value is not a monetary value, a corresponding error Alert will popup and the changes will not be committed. Table automatically updates. 
 
 * _Edit serial number of Item:_ In the table, click on item, double click the item's serial number cell and press Enter to submit the changes. If the serial number is not in the correct format or is a duplicate, the corresponding error Alert will popup and the changes will not be committed. Table automatically updates. 
 
