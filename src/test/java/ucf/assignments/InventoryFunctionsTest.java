@@ -417,7 +417,33 @@ class InventoryFunctionsTest {
 
     @Test
     void able_to_save_items_to_file_as_TSV() throws IOException {
+        //create FileFunctions object
+        FileFunctions fileFunctions = new FileFunctions();
 
+        //create InventoryFunctions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        // add to list of item
+        Item item1 = new Item("100.00", "1234567890", "Theodore");
+        Item item2 = new Item("100.00", "1234567890", "Simon");
+        Item item3 = new Item("100.00", "1234567890", "Alvin");
+        ArrayList<Item> itemsList = new ArrayList<>();
+        itemsList.add(item1);
+        itemsList.add(item2);
+        itemsList.add(item3);
+        inventoryFunctions.setAllItems(itemsList);
+
+        //create temp file in project directory
+        File file = File.createTempFile("TEST", ".txt", null);
+        //call saveFile
+        fileFunctions.storeFileFormatted(".txt", file, itemsList);
+
+        //check if file exists
+        boolean actual = file.exists();
+        file.deleteOnExit();
+        boolean expected = true;
+
+        assertEquals(actual,expected);
     }
 
     @Test
