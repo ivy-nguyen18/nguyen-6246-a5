@@ -46,6 +46,18 @@ class InventoryFunctionsTest {
     }
 
     @Test
+    void item_able_to_have_serial_number_represented_as_10X_with_letters_and_digits2(){
+        //create inventory object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        //check is serial number given is in acceptable format
+        boolean actual = inventoryFunctions.validateSerialNumberFormat("XX");
+        boolean expected = false;
+
+        assertEquals(actual, expected);
+    }
+
+    @Test
     void item_able_to_have_unique_serial_number(){
     }
 
