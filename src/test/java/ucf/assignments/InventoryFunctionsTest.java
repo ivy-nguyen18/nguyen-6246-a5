@@ -2,6 +2,8 @@ package ucf.assignments;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -247,7 +249,7 @@ class InventoryFunctionsTest {
         itemsList.add(item1);
         inventoryFunctions.setAllItems(itemsList);
 
-        //create add to list of item
+        // add to list of item
         inventoryFunctions.addItem("Theodore", "1234567890", "100.00");
         inventoryFunctions.addItem("Alvin", "1234567891", "1200.00");
         inventoryFunctions.addItem("Simon", "ABCDEFGHIJ", "110.00");
@@ -276,17 +278,15 @@ class InventoryFunctionsTest {
     void able_to_search_inventory_by_name(){
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
-        Item item1 = new Item("100.00", "1234567891", "Theodore");
-        Item item2 = new Item("100.00", "1234567890", "Simon");
-        Item item3 = new Item("100.00", "1234567890", "Alvin");
-        ArrayList<Item> itemsList = new ArrayList<>();
-        itemsList.add(item1);
-        itemsList.add(item2);
-        itemsList.add(item3);
+        // add to list of item
+        inventoryFunctions.addItem("Theodore", "1234567890", "100.00");
+        inventoryFunctions.addItem("Alvin", "1234567891", "1200.00");
+        inventoryFunctions.addItem("Simon", "ABCDEFGHIJ", "110.00");
 
-        inventoryFunctions.setAllItems(itemsList);
+        //search for name
         inventoryFunctions.searchByName("Alvin");
 
+        //get filtered list size
         int actual = inventoryFunctions.getFilteredItems().size();
         int expected = 1;
 
@@ -294,20 +294,19 @@ class InventoryFunctionsTest {
     }
 
     @Test
-    void able_to_search_inventory_by_serial_number(){
+    void able_to_search_inventory_by_partial_name(){
         InventoryFunctions inventoryFunctions = new InventoryFunctions();
 
-        Item item1 = new Item("100.00", "1234567891", "Theodore");
-        Item item2 = new Item("100.00", "1234567890", "Simon");
-        Item item3 = new Item("100.00", "1234567890", "Alvin");
-        ArrayList<Item> itemsList = new ArrayList<>();
-        itemsList.add(item1);
-        itemsList.add(item2);
-        itemsList.add(item3);
+        // add to list of item
+        inventoryFunctions.addItem("Theodore", "1234567890", "100.00");
+        inventoryFunctions.addItem("Alvin", "1234567891", "1200.00");
+        inventoryFunctions.addItem("Albert", "1234567891", "1200.00");
+        inventoryFunctions.addItem("Simon", "ABCDEFGHIJ", "110.00");
 
-        inventoryFunctions.setAllItems(itemsList);
-        inventoryFunctions.searchBySerialNumber("1234567890");
+        //search for name
+        inventoryFunctions.searchByName("Al");
 
+        //get filtered list size
         int actual = inventoryFunctions.getFilteredItems().size();
         int expected = 2;
 
@@ -315,18 +314,89 @@ class InventoryFunctionsTest {
     }
 
     @Test
-    void able_to_save_items_to_file_as_JSON(){
+    void able_to_search_inventory_by_serial_number(){
+        //create InventoryFunctions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        // add to list of item
+        inventoryFunctions.addItem("Theodore", "1234567890", "100.00");
+        inventoryFunctions.addItem("Alvin", "1234567891", "1200.00");
+        inventoryFunctions.addItem("Simon", "ABCDEFGHIJ", "110.00");
+
+        //search by serial number
+        inventoryFunctions.searchBySerialNumber("1234567890");
+
+        //get size of filtered list
+        int actual = inventoryFunctions.getFilteredItems().size();
+        int expected = 1;
+
+        assertEquals(actual, expected);
     }
 
     @Test
-    void able_to_save_items_to_file_as_HTML(){
+    void able_to_search_inventory_by_partial_serial_number(){
+        //create InventoryFunctions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        // add to list of item
+        inventoryFunctions.addItem("Theodore", "1234567890", "100.00");
+        inventoryFunctions.addItem("Alvin", "1234567891", "1200.00");
+        inventoryFunctions.addItem("Simon", "ABCDEFGHIJ", "110.00");
+
+        //search by serial number
+        inventoryFunctions.searchBySerialNumber("123");
+
+        //get size of filtered list
+        int actual = inventoryFunctions.getFilteredItems().size();
+        int expected = 2;
+
+        assertEquals(actual, expected);
     }
 
     @Test
-    void able_to_save_items_to_file_as_TSV(){
+    void able_to_save_items_to_file_as_JSON() throws IOException {
+        //create FileFunctions object
+        FileFunctions fileFunctions = new FileFunctions();
+
+        //create InventoryFunctions object
+        InventoryFunctions inventoryFunctions = new InventoryFunctions();
+
+        // add to list of item
+        Item item1 = new Item("100.00", "1234567890", "Theodore");
+        Item item2 = new Item("100.00", "1234567890", "Simon");
+        Item item3 = new Item("100.00", "1234567890", "Alvin");
+        ArrayList<Item> itemsList = new ArrayList<>();
+        itemsList.add(item1);
+        itemsList.add(item2);
+        itemsList.add(item3);
+        inventoryFunctions.setAllItems(itemsList);
+
+        //create temp file in project directory
+        File file = File.createTempFile("TEST", ".json", null);
+        //call saveFile
+        fileFunctions.storeFileFormatted(".json", file, itemsList);
+
+        //check if file exists
+        boolean actual = file.exists();
+        file.deleteOnExit();
+        boolean expected = true;
+
+        assertEquals(actual,expected);
+    }
+
+    @Test
+    void able_to_save_items_to_file_as_HTML() throws IOException {
+
+    }
+
+    @Test
+    void able_to_save_items_to_file_as_TSV() throws IOException {
+
     }
 
     @Test
     void able_to_load_items_from_previous(){
+        //create FileFunctions object
+        FileFunctions fileFunctions = new FileFunctions();
     }
 }
