@@ -12,7 +12,7 @@
    
    Otherwise, error labels will appear, corresponding to input, and item will not be added. 
    
-    **Note**: Adding an item will cause list to resort to default view with all items visible.
+    **Note**: Adding an item will cause list to resort to default view with all items visible. Also, serial numbers will default to uppercase.
 
 * _Sort list by value, serial number, or name:_ Click on table headers to sort the list.
 
@@ -22,7 +22,8 @@
 
 * _Edit value of Item:_ In the table, click on item, double click the item's value cell and press Enter to submit the changes. Enter a number only. If the value is not a monetary value, a corresponding error Alert will popup and the changes will not be committed. Table automatically updates. 
 
-* _Edit serial number of Item:_ In the table, click on item, double click the item's serial number cell and press Enter to submit the changes. If the serial number is not in the correct format or is a duplicate, the corresponding error Alert will popup and the changes will not be committed. Table automatically updates. 
+* _Edit serial number of Item:_ In the table, click on item, double click the item's serial number cell and press Enter to submit the changes. If the serial number is not in the correct format or is a duplicate, the corresponding error Alert will popup and the changes will not be committed. Also, serial numbers will default to uppercase.
+Table automatically updates. 
 
 * _Edit name of Item:_ In the table, click on item, double click the item's name cell and press Enter to submit the changes. If the name is not in the correct format, a corresponding error Alert will popup and the changes will not be committed. Table automatically updates. 
 
