@@ -106,7 +106,7 @@ public class InventoryController {
         String value = valueTextField.getText();
         String serialNumber = serialNumberTextField.getText();
 
-        if(validateInputs(name, serialNumber, value)){
+        if(validateInputs(name.toUpperCase(), serialNumber, value)){
             initializeLabels();
             inventoryFunctions.addItem(name, serialNumber.toUpperCase(), value);
             updateTableView(inventoryFunctions.getAllItemsObservable());
