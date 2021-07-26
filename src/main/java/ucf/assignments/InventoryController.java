@@ -238,8 +238,8 @@ public class InventoryController {
     @FXML
     public void editSerialNumber(TableColumn.CellEditEvent edittedCell){
         Item itemSelected = itemTableView.getSelectionModel().getSelectedItem();
-        String newSerialNum = edittedCell.getNewValue().toString();
-        String oldSerialNum = edittedCell.getOldValue().toString();
+        String newSerialNum = edittedCell.getNewValue().toString().toUpperCase();
+        String oldSerialNum = edittedCell.getOldValue().toString().toUpperCase();
 
         if(!inventoryFunctions.isDuplicate(newSerialNum) && inventoryFunctions.validateSerialNumberFormat(newSerialNum)){
             inventoryFunctions.editSerialNumber(itemSelected, newSerialNum, oldSerialNum);
